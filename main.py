@@ -8,7 +8,7 @@ from data_extraction import data_extraction  # Import de la fonction depuis data
 
 def main():
     # Charge les données à partir du fichier CSV
-    winetaste_df = data_extraction("winemag-data-130k-v2.csv")
+    winetaste_df = data_extraction("./data/winemag.csv")
 
     # Vérifie si les données ont été chargées avec succès
     if winetaste_df is not None:
