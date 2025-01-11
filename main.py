@@ -4,18 +4,19 @@ import numpy as np  # Pour les calculs numériques
 import matplotlib.pyplot as plt  # Pour les graphiques
 import seaborn as sns  # Pour les visualisations
 from data_extraction import data_extraction  # Import de la fonction depuis data_extraction.py
+from data_map import get_average_ratings_by_country, plot_map
+from data_prompt import wine_prod_prompt
+from data_treatment import wine_prod_treatment
 
+
+def Wine_Prod():
+    wineprod_df = data_extraction("data/wine-production/wine-production.csv")
+    wineprod_treated_df = wine_prod_treatment(wineprod_df)
+    wine_prod_prompt(wineprod_treated_df)
 
 def main():
-    # Charge les données à partir du fichier CSV
-    winetaste_df = data_extraction("winemag-data-130k-v2.csv")
+    Wine_Prod()
 
-    # Vérifie si les données ont été chargées avec succès
-    if winetaste_df is not None:
-        print(winetaste_df.head())  # Affiche les premières lignes du DataFrame
-        # Vous pouvez ajouter des visualisations ou des analyses ici
-    else:
-        print("L'extraction des données a échoué.")
 
 
 # Exécuter le script principal

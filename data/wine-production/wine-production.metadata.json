@@ -1,0 +1,30 @@
+{
+  "chart": {
+    "title": "Wine production",
+    "subtitle": "Wine production, measured in tonnes per year.",
+    "citation": "Food and Agriculture Organization of the United Nations (2023)",
+    "originalChartUrl": "https://ourworldindata.org/grapher/wine-production?v=1&csvType=full&useColumnShortNames=false",
+    "selection": [
+      "United Kingdom"
+    ]
+  },
+  "columns": {
+    "Wine | 00000564 || Production | 005510 || tonnes": {
+      "titleShort": "Wine production",
+      "titleLong": "Wine production - FAO",
+      "descriptionKey": [],
+      "shortUnit": "t",
+      "unit": "tonnes",
+      "timespan": "1961-2021",
+      "type": "Numeric",
+      "owidVariableId": 836176,
+      "shortName": "wine__00000564__production__005510__tonnes",
+      "lastUpdated": "2024-03-14",
+      "nextUpdate": "2025-03-14",
+      "citationShort": "Food and Agriculture Organization of the United Nations (2023) – with major processing by Our World in Data",
+      "citationLong": "Food and Agriculture Organization of the United Nations (2023) – with major processing by Our World in Data. “Wine production – FAO” [dataset]. Food and Agriculture Organization of the United Nations, “Production: Crops and livestock products” [original data].",
+      "fullMetadata": "https://api.ourworldindata.org/v1/indicators/836176.metadata.json"
+    }
+  },
+  "dateDownloaded": "2024-12-05"
+}

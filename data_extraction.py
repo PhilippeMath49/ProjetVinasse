@@ -8,8 +8,8 @@ def data_extraction(csv):
     Charge un fichier CSV et retourne un DataFrame pandas.
     """
     try:
-        winetaste_df = pd.read_csv(csv)
-        return winetaste_df
+        wineprod_df = pd.read_csv(csv)
+        return wineprod_df
     except FileNotFoundError:
         print(f"Erreur: Le fichier '{csv}' n'a pas été trouvé.")
         return None
