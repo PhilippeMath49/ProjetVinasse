@@ -3,7 +3,7 @@ import pandas as pd  # Pour les manipulations de données
 import numpy as np  # Pour les calculs numériques
 import matplotlib.pyplot as plt  # Pour les graphiques
 import seaborn as sns  # Pour les visualisations
-from src.lib.data import Data  
+from lib.data import Data  
 
 
 def Wine_Prod():
