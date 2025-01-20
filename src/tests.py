@@ -6,5 +6,5 @@ import seaborn as sns
 
 shapefile_path = "ne_110m_land/ne_110m_land.shp"
 world = gpd.read_file(shapefile_path)
-plt.(world)
+world.plot()
 plt.show()
