@@ -11,4 +11,4 @@ Philippe : Récupération de données/ Analyse de données.
 
 Noa : Note book / traitement des données / architecture du projet.
 
-Loïc : Affichage données carte
+Loïc : Affichage données carte / read me
