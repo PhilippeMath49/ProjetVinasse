@@ -2,7 +2,6 @@ import streamlit as st
 import plotly.express as px
 import pandas as pd
 import geopandas as gpd
-import os
 
 # Charger les données
 class Page1:
@@ -15,9 +14,9 @@ class Page1:
         df["Year"] = df["Year"].astype(int)
         return df.groupby("Entity")["Wine"].median().reset_index()
     
-    def general():
-        wine_prod_df = pd.read_csv("data/wine-production/wine-production.csv")
-        reviews_df = pd.read_csv("data/winemag.csv")
+    def general(wine_prod_df, reviews_df):
+        # wine_prod_df = pd.read_csv("data/wine-production/wine-production.csv")
+        # reviews_df = pd.read_csv("data/winemag.csv")
         wine_prod_df = Page1.clean_wine_data(wine_prod_df)
 
         # Charger les données géographiques
@@ -46,7 +45,7 @@ class Page1:
         
         
 def main():
-    Page1.general()
+    Page1.general("../data/wine-production/wine-production.csv", "../data/winemag.csv")
     
     
 if __name__ == "__main__":
