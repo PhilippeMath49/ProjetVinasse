@@ -13,8 +13,8 @@ def main():
     import os
     import streamlit as st
 
-    st.write("Contenu du dossier data :", os.listdir("./data"))
-    st.write("Contenu du dossier wine-production :", os.listdir("./data/wine-production"))
+    st.write("Contenu du dossier data :", os.listdir("./src"))
+    st.write("Contenu du dossier wine-production :", os.listdir("./src/data/"))
 
     
     
