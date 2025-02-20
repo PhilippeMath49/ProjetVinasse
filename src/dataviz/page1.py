@@ -6,8 +6,8 @@ import os
 
 # Charger les données
 class Page1:
-    wine_prod_df = pd.read_csv("../data/wine-production/wine-production.csv")
-    reviews_df = pd.read_csv("../data/winemag.csv")
+    
+
 
     # Nettoyage et traitement
     def clean_wine_data(df):
@@ -16,7 +16,8 @@ class Page1:
         return df.groupby("Entity")["Wine"].median().reset_index()
     
     def general():
-
+        wine_prod_df = pd.read_csv("../data/wine-production/wine-production.csv")
+        reviews_df = pd.read_csv("../data/winemag.csv")
         wine_prod_df = Page1.clean_wine_data(wine_prod_df)
 
         # Charger les données géographiques
@@ -32,7 +33,7 @@ class Page1:
         fig_map.update_geos(fitbounds="locations", visible=False)
 
         # Création d'un histogramme des notes de vin
-        fig_hist = px.histogram(Page1.reviews_df, x="points", nbins=20, title="Distribution des Notes de Vin")
+        fig_hist = px.histogram(reviews_df, x="points", nbins=20, title="Distribution des Notes de Vin")
 
         # Création de l'application Streamlit
         st.title("Tableau de Bord sur le Vin")
@@ -44,5 +45,10 @@ class Page1:
         st.plotly_chart(fig_hist)
         
         
-        
+def main():
+    Page1.general()
+    
+    
+if __name__ == "__main__":
+    main()
         
