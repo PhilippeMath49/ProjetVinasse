@@ -9,7 +9,7 @@ import dataviz.page1 as page1  # Pour les visualisations
 
 
 def main():
-    page1.Page1.general()
+    page1.Page1.general("./data/wine-production/wine-production.csv", "./data/winemag.csv")
     
     
     
