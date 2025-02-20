@@ -12,3 +12,7 @@ Philippe : Récupération de données/ Analyse de données.
 Noa : Note book / traitement des données / architecture du projet.
 
 Loïc : Affichage données carte / read me
+
+# Sources
+
+Datasets exports de vins : https://comtradeplus.un.org/TradeFlow?Frequency=A&Flows=X&CommodityCodes=2204&Partners=0&Reporters=all&period=all&AggregateBy=none&BreakdownMode=plus

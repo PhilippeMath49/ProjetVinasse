@@ -6,7 +6,15 @@ import plotly.express as px
 import geopandas as gpd
 
 class Data:
-    
+
+    #Pour extraire les csv de UN tradedata
+    def export_data_extraction(csvname, csvworldname, csvexportname):
+        wineexport_df = pd.read_csv(csvname, encoding='ISO-8859-1')  # L'encoding est uniquement pour les csv de UN Tradedata
+        winexportworld_df = wineexport_df[wineexport_df['partnerISO'].str.contains('World', na=False)]
+        wineexport_df = wineexport_df[~wineexport_df['partnerISO'].str.contains('World', na=False)]
+        wineexport_df.to_csv(csvexportname, index=False)
+        winexportworld_df.to_csv(csvworldname, index=False)
+
     def data_extraction(csv):
         """
         Charge un fichier CSV et retourne un DataFrame pandas.
