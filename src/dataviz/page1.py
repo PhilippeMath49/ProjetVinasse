@@ -55,27 +55,8 @@ class Page1:
 
 # Fonction principale
     def map():
-        st.title("🌍 Visualisation de la production de vin")
-        
-        wine_df, world = Page1.load_data()
-        if wine_df is None or world is None:
-            return
-        
-        # Sélection de l'année
-        selected_year = st.slider("Sélectionnez une année", min_value=int(wine_df['Year'].min()), max_value=int(wine_df['Year'].max()), value=2010)
-        
-        # Filtrer les données par année
-        filtered_df = wine_df[wine_df['Year'] == selected_year]
-        
-        # Fusion avec les données géographiques
-        merged = world.merge(filtered_df, left_on="NAME", right_on="Entity", how="left")
-        
-        # Création de la carte avec Plotly
-        fig = px.choropleth(merged, geojson=merged.geometry, locations=merged.index,
-                            color='Wine', title=f"Production de vin en {selected_year}",
-                            hover_name="Entity", projection="natural earth")
-        
-        st.plotly_chart(fig)
+        # Faire le traitement des données et affichage de la map ici avec streamlit
+        pass
 def main():
     Page1.general()
     
