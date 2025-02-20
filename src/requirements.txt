@@ -2,3 +2,4 @@ seaborn
 geopandas
 geodatasets
 plotly
+streamlit

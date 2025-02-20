@@ -46,6 +46,7 @@ class Page1:
         
         
 def main():
+    # os.system("pip install -r requirements.txt")
     Page1.general()
     
     
