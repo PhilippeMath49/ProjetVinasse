@@ -16,12 +16,12 @@ class Page1:
         return df.groupby("Entity")["Wine"].median().reset_index()
     
     def general():
-        wine_prod_df = pd.read_csv("../data/wine-production/wine-production.csv")
-        reviews_df = pd.read_csv("../data/winemag.csv")
+        wine_prod_df = pd.read_csv("./data/wine-production/wine-production.csv")
+        reviews_df = pd.read_csv("./data/winemag.csv")
         wine_prod_df = Page1.clean_wine_data(wine_prod_df)
 
         # Charger les données géographiques
-        shapefile_path = "../map/ne_110m_admin_0_countries/ne_110m_admin_0_countries.shp"
+        shapefile_path = "./map/ne_110m_admin_0_countries/ne_110m_admin_0_countries.shp"
         world = gpd.read_file(shapefile_path)
 
         # Fusion des données
