@@ -9,13 +9,8 @@ import dataviz.page1 as page1  # Pour les visualisations
 
 
 def main():
-    # page1.Page1.general("./data/wine-production/wine-production.csv", "./data/winemag.csv")
-    import os
-    import streamlit as st
-
-    st.write("Contenu du dossier data :", os.listdir("./src"))
-    st.write("Contenu du dossier wine-production :", os.listdir("./src/data/"))
-
+    page1.Page1.general("./data/wine-production/wine-production.csv", "./data/winemag.csv")
+    
     
     
 
