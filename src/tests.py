@@ -5,58 +5,28 @@ import seaborn as sns  # Pour les visualisations
 import geopandas as gpd  # Pour les cartes géographiques
 from lib.data import Data
 import plotly.express as px
-import pycountry_convert as pc
-import pycountry
+import chardet
 
-def normalize_country_name(country):
-    """Essaie de normaliser un nom de pays donné en utilisant pycountry."""
-    try:
-        # Vérifie si le pays existe sous forme d'alpha-2 ou alpha-3
-        country_obj = pycountry.countries.lookup(country)
-        return country_obj.name  # Retourne le nom officiel du pays
-    except LookupError:
-        return country  # Si introuvable, renvoie le nom d'origine
 
-def get_continent(country_name):
-    """Renvoie le continent associé à un pays donné."""
-    try:
-        normalized_country = normalize_country_name(country_name)
-        country_alpha2 = pc.country_name_to_country_alpha2(normalized_country)
-        continent_code = pc.country_alpha2_to_continent_code(country_alpha2)
-        continents = {
-            "AF": "Afrique",
-            "AS": "Asie",
-            "EU": "Europe",
-            "NA": "Amérique du Nord",
-            "SA": "Amérique du Sud",
-            "OC": "Océanie",
-            "AN": "Antarctique"
-        }
-        return continents.get(continent_code, "Inconnu")
-    except:
-        return "Inconnu"
 
 def modif():
-    winemag_df = Data.data_extraction("data/winemag.csv")
 
 
-    # Ajout de la colonne continent
-    winemag_df['continent'] = winemag_df['country'].apply(get_continent)
-    winemag_df.to_csv('data/winemagcontinent.csv', index=False)
-    df_province = winemag_df.groupby(['continent', 'country', 'province'], as_index=False)['points'].mean()
 
-    # Création du diagramme Sunburst
-    fig = px.sunburst(
-        df_province,
-        path=['continent', 'country', 'province'],  # Hiérarchie : Continent → Pays → Province
-        values='points',  # Utilisation des moyennes de notes comme valeurs
-        color='points',  # Coloration selon la moyenne des notes
-        color_continuous_scale='RdBu',  # Palette de couleurs
-        title="Moyenne des notes de vin par Province, Pays et Continent"
-    )
+    wineexport1_df = pd.read_csv('data/wineexports/TradeData_2_20_2025_10_30_9.csv', encoding='ISO-8859-1')
+    wineexport2_df = pd.read_csv('data/wineexports/TradeData_2_20_2025_10_29_8.csv', encoding='ISO-8859-1')
+    wineexport3_df = pd.read_csv('data/wineexports/TradeData_2_20_2025_10_17_32.csv', encoding='ISO-8859-1')
+    #typeCode,freqCode,refPeriodId,refYear,refMonth,period,reporterCode,
+    #|reporterISO|,reporterDesc,flowCode,|flowDesc|,partnerCode,partnerISO,
+    #|partnerDesc|,partner2Code,partner2ISO,partner2Desc,classificationCode,
+    #classificationSearchCode,isOriginalClassification,cmdCode,cmdDesc,
+    # aggrLevel,isLeaf,customsCode,customsDesc,mosCode,motCode,motDesc,
+    # |qtyUnitCode,qtyUnitAbbr,qty,isQtyEstimated|,altQtyUnitCode,altQtyUnitAbbr,
+    # altQty,isAltQtyEstimated,netWgt,isNetWgtEstimated,grossWgt,isGrossWgtEstimated,
+    # cifvalue,fobvalue,primaryValue,legacyEstimationFlag,isReported,isAggregate
+    wineexport1_df = wineexport1_df.drop(['typeCode', 'freqCode', 'refPeriodId', 'refYear', 'period', 'reporterCode'], axis=1)
+    print(wineexport1_df.head())
 
-    # Affichage du graphique
-    fig.show()
 
 
 def main():
