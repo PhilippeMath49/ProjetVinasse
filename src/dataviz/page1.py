@@ -18,7 +18,7 @@ class Page1:
         df["Year"] = df["Year"].astype(int)
         return df.groupby("Entity")["Wine"].median().reset_index()
     
-    def distr_note():
+    def distrib_note():
 
 
 
@@ -45,7 +45,7 @@ class Page1:
         
 
 
-    def  distrib_meanscore():
+    def distrib_meanscore():
         df = pd.read_csv("src/data/winemag.csv")
         mean = df["points"].mean()
         std = df["points"].std()
