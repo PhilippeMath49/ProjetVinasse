@@ -60,8 +60,6 @@ class Page1:
         # Ligne de la moyenne
         mean_line = go.Scatter(x=[mean, mean], y=[0, max(normal_curve)], mode='lines', line=dict(color='green', dash='dash', width=2), name=f"Moyenne: {mean:.2f}")
 
-        # Créer la boîte à moustaches
-        boxplot = go.Box(x=df["points"], marker=dict(color='blue'), name="Boxplot", boxmean=True)
         
 
         # Création de la figure
@@ -69,7 +67,6 @@ class Page1:
         fig.add_trace(histogram)
         fig.add_trace(normal_line)
         fig.add_trace(mean_line)
-        fig.add_trace(boxplot)
 
         # Mettre en page la figure
         fig.update_layout(
@@ -83,6 +80,12 @@ class Page1:
         # Interface Streamlit
         st.title("Analyse des Scores des Vins")
         st.plotly_chart(fig)
+        boxplot = px.box(df, x="points", title="Boîte à Moustaches des Scores de Vin")
+        st.plotly_chart(boxplot)
+        st.write(f"La moyenne des scores des vins est de {mean:.2f} avec un écart-type de {std:.2f}.")
+        st.write("La distribution des scores des vins suit une distribution normale.")
+        st.write("La majorité des vins ont des scores compris entre 85 et 90 points.")
+        st.write("Il y a des vins exceptionnels avec des scores supérieurs à 90 points.")
 
 
     def general():
