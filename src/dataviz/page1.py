@@ -74,6 +74,7 @@ def general():
 
     with tabs[0]:
         distrib_note()
+        distrib_meanscore()
 
     with tabs[1]:
-        distrib_meanscore()
+        pass
