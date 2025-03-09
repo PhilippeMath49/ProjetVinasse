@@ -6,3 +6,5 @@ streamlit
 pandas
 numpy
 matplotlib
+scipy
+scikit-learn
