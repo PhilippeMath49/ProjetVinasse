@@ -28,7 +28,6 @@ class Page1:
 
         # # Charger les données géographiques
         
-        fig_map = Page1.map()
 
         # # Création d'un histogramme des notes de vin
         fig_hist = px.histogram(reviews_df, x="points", nbins=20, title="Distribution des Notes de Vin")
@@ -36,8 +35,6 @@ class Page1:
         # Création de l'application Streamlit
         st.title("Tableau de Bord sur le Vin")
 
-        st.subheader("Production de Vin par Pays")
-        st.plotly_chart(fig_map)
 
         st.subheader("Distribution des Notes de Vin")
         st.plotly_chart(fig_hist)
