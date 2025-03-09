@@ -30,8 +30,8 @@ class Page1:
         # Création de l'application Streamlit
         st.title("Tableau de Bord sur le Vin")
 
-        # st.subheader("Production de Vin par Pays")
-        # st.plotly_chart(fig_map)
+        st.subheader("Production de Vin par Pays")
+        st.plotly_chart(fig_map)
 
         # st.subheader("Distribution des Notes de Vin")
         # st.plotly_chart(fig_hist)
