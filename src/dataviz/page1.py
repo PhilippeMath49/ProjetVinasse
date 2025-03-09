@@ -62,7 +62,7 @@ class Page1:
 
         # Créer la boîte à moustaches
         boxplot = go.Box(x=df["points"], marker=dict(color='blue'), name="Boxplot", boxmean=True)
-        histogram = go.Histogram(x=df["points"], nbinsx=20, marker=dict(color='blue', line=dict(width=1)), name="Données")
+        
 
         # Création de la figure
         fig = go.Figure()
