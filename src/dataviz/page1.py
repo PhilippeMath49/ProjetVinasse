@@ -61,7 +61,7 @@ class Page1:
         mean_line = go.Scatter(x=[mean, mean], y=[0, max(normal_curve)], mode='lines', line=dict(color='green', dash='dash', width=2), name=f"Moyenne: {mean:.2f}")
 
         # Créer la boîte à moustaches
-        boxplot = go.Box(x=df["points"], marker=dict(color='blue'), name="Boxplot", boxmean=True, boxpoints='all', jitter=0.3, pointpos=-1.8)
+        boxplot = go.Box(x=df["points"], marker=dict(color='blue'), name="Boxplot", boxmean=True)
         histogram = go.Histogram(x=df["points"], nbinsx=20, marker=dict(color='blue', line=dict(width=1)), name="Données")
 
         # Création de la figure
