@@ -16,25 +16,25 @@ class Page1:
         return df.groupby("Entity")["Wine"].median().reset_index()
     
     def general():
-        wine_prod_df = pd.read_csv("src/data/wine-production/wine-production.csv")
-        reviews_df = pd.read_csv("src/data/winemag.csv")
-        wine_prod_df = Page1.clean_wine_data(wine_prod_df)
+        # wine_prod_df = pd.read_csv("src/data/wine-production/wine-production.csv")
+        # reviews_df = pd.read_csv("src/data/winemag.csv")
+        # wine_prod_df = Page1.clean_wine_data(wine_prod_df)
 
-        # Charger les données géographiques
+        # # Charger les données géographiques
         
-        fig_map = Page1.map()
+        # fig_map = Page1.map()
 
-        # Création d'un histogramme des notes de vin
-        fig_hist = px.histogram(reviews_df, x="points", nbins=20, title="Distribution des Notes de Vin")
+        # # Création d'un histogramme des notes de vin
+        # fig_hist = px.histogram(reviews_df, x="points", nbins=20, title="Distribution des Notes de Vin")
 
         # Création de l'application Streamlit
         st.title("Tableau de Bord sur le Vin")
 
-        st.subheader("Production de Vin par Pays")
-        st.plotly_chart(fig_map)
+        # st.subheader("Production de Vin par Pays")
+        # st.plotly_chart(fig_map)
 
-        st.subheader("Distribution des Notes de Vin")
-        st.plotly_chart(fig_hist)
+        # st.subheader("Distribution des Notes de Vin")
+        # st.plotly_chart(fig_hist)
         
         
         
