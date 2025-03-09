@@ -9,7 +9,7 @@ import dataviz.page1 as page1  # Pour les visualisations
 
 
 def main():
-    page1
+    page1.general()
     
     
     

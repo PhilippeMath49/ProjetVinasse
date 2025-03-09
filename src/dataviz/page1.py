@@ -65,12 +65,15 @@ def load_data():
     world = gpd.read_file(shapefile_path)
     return wine_df, world
 
-# Interface principale avec onglets
-st.title("Tableau de Bord sur le Vin 🍷")
-tabs = st.tabs(["📊 Distribution des Notes", "📈 Analyse des Scores"])
 
-with tabs[0]:
-    distrib_note()
 
-with tabs[1]:
-    distrib_meanscore()
+def general():
+    # Interface principale avec onglets
+    st.title("Tableau de Bord sur le Vin 🍷")
+    tabs = st.tabs(["📊 Distribution des Notes", "📈 Analyse des Scores"])
+
+    with tabs[0]:
+        distrib_note()
+
+    with tabs[1]:
+        distrib_meanscore()
