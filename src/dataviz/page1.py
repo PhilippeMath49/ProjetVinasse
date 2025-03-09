@@ -78,6 +78,27 @@ def top_countries_chart():
     st.subheader("Top 10 des pays avec le plus de variétés de vins")
     st.plotly_chart(fig)
 
+def top_varieties_chart():
+    df = pd.read_csv("src/data/winemag.csv")
+    top_varieties = df["variety"].value_counts().head(10)
+    mean_prices = df.groupby("variety")["price"].mean().reindex(top_varieties.index)
+    
+    fig = go.Figure()
+    
+    fig.add_trace(go.Bar(x=top_varieties.index, y=top_varieties.values, name="Nombre de vins",
+                         marker_color=px.colors.sequential.Magma[4]))
+    
+    fig.add_trace(go.Scatter(x=top_varieties.index, y=mean_prices, name="Prix moyen",
+                             mode='lines+markers', line=dict(color='blue', width=2)))
+    
+    fig.update_layout(title="Top 10 des variétés de cépages les plus populaires avec prix moyens",
+                      xaxis_title="Variété",
+                      yaxis_title="Nombre de vins",
+                      yaxis2=dict(title="Prix moyen (en $)", overlaying='y', side='right'))
+    
+    st.subheader("Top 10 des variétés de cépages les plus populaires avec prix moyens")
+    st.plotly_chart(fig)
+
 def general():
     # Interface principale avec onglets
     st.title("Tableau de Bord sur le Vin 🍷")
@@ -89,3 +110,4 @@ def general():
 
     with tabs[1]:
         top_countries_chart()
+        top_varieties_chart()
