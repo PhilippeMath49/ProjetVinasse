@@ -57,10 +57,3 @@ class Page1:
     def map():
         # Faire le traitement des données et affichage de la map ici avec streamlit
         pass
-def main():
-    Page1.general()
-    
-    
-if __name__ == "__main__":
-    main()
-        
