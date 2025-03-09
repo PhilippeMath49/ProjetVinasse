@@ -89,6 +89,7 @@ class Page1:
 
     def general():
         Page1.distrib_note()
+        Page1.distrib_meanscore()
 
 
 
