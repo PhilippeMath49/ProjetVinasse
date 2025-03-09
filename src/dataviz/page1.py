@@ -65,16 +65,27 @@ def load_data():
     world = gpd.read_file(shapefile_path)
     return wine_df, world
 
-
+def top_countries_chart():
+    df = pd.read_csv("src/data/winemag.csv")
+    top_countries = df["country"].value_counts().head(10)
+    
+    fig = px.bar(x=top_countries.index, y=top_countries.values,
+                 title="Top 10 des pays avec le plus de variétés de vins",
+                 labels={"x": "Pays", "y": "Nombre de vins"},
+                 color=top_countries.index, color_discrete_sequence=px.colors.sequential.Viridis)
+    
+    fig.update_layout(xaxis_tickangle=-45)
+    st.subheader("Top 10 des pays avec le plus de variétés de vins")
+    st.plotly_chart(fig)
 
 def general():
     # Interface principale avec onglets
     st.title("Tableau de Bord sur le Vin 🍷")
-    tabs = st.tabs(["📊 Distribution des Notes", "📈 Analyse des Scores"])
+    tabs = st.tabs(["📊 Distribution des Notes et Analyse des Scores","📈 Variété et prix "])
 
     with tabs[0]:
         distrib_note()
         distrib_meanscore()
 
     with tabs[1]:
-        pass
+        top_countries_chart()
