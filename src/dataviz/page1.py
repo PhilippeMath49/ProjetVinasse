@@ -168,45 +168,50 @@ def load_and_display_soil_map():
     # Charger le fichier CSV
     df = pd.read_csv("src/data/LUCAS-SOIL-2018.csv")  # Remplacez par le chemin réel du fichier CSV
 
-    required_columns = ["TH_LAT", "TH_LONG", "pH_CaCl2", "pH_H2O", "EC", "OC", "CaCO3", "P", "N", "K", "Ox_Al", "Ox_Fe"]
+    geo_columns = ["TH_LAT", "TH_LONG"]
+    chem_columns = ["pH_CaCl2", "pH_H2O", "EC", "OC", "CaCO3", "P", "N", "K", "Ox_Al", "Ox_Fe"]
+    required_columns = geo_columns + chem_columns
+    
+    # Vérification de la présence des colonnes requises
     if not all(col in df.columns for col in required_columns):
         st.error("Colonnes nécessaires (latitude, longitude, composés chimiques) manquantes.")
         return
     
-    # Nettoyer les données : supprimer les lignes où les valeurs essentielles sont manquantes
+    # Nettoyage des données : suppression des lignes avec des valeurs manquantes
     df = df.dropna(subset=required_columns)
     
-    # Limiter les données aux zones géographiques de l'Europe pour améliorer les performances
+    # Filtrage des données pour se concentrer sur l'Europe
     df_europe = df[(df["TH_LAT"] > 35) & (df["TH_LAT"] < 72) & (df["TH_LONG"] > -25) & (df["TH_LONG"] < 40)]
     
-    # Réduire la quantité de données (échantillonnage)
-    sample_size = 1000  # Limiter à 1000 points pour éviter un trop grand nombre de points
+    # Réduction de la quantité de données via échantillonnage
+    sample_size = 1000  # Limiter à 1000 points pour optimiser la performance
     if len(df_europe) > sample_size:
         df_europe = df_europe.sample(n=sample_size, random_state=42)
     
-    # Trouver le composé chimique dominant pour chaque point
-    chem_columns = ["pH_CaCl2", "pH_H2O", "EC", "OC", "CaCO3", "P", "N", "K", "Ox_Al", "Ox_Fe"]
+    # Détermination du composé chimique dominant pour chaque point
     df_europe["Dominant_Chemical"] = df_europe[chem_columns].idxmax(axis=1)
     
-    # Créer la carte Plotly
-    fig = px.scatter_geo(df_europe,
-                         lat="TH_LAT", 
-                         lon="TH_LONG", 
-                         color="Dominant_Chemical", 
-                         hover_name="Dominant_Chemical",  # Afficher le composé dominant au survol
-                         title="Carte des Composés Chimiques Dominants en Europe",
-                         template="plotly_dark")
+    # Création de la carte interactive
+    fig = px.scatter_geo(
+        df_europe,
+        lat="TH_LAT", 
+        lon="TH_LONG", 
+        color="Dominant_Chemical", 
+        hover_data=chem_columns,  # Afficher les valeurs des composés chimiques au survol
+        title="Carte des Composés Chimiques Dominants en Europe",
+        template="plotly_dark"
+    )
     
-    # Ajuster la projection de la carte et centrer sur l'Europe
+    # Configuration de l'affichage de la carte
     fig.update_geos(
         projection_type="mercator",
-        center={"lat": 50, "lon": 10},  # Centrer la carte sur l'Europe
+        center={"lat": 50, "lon": 10},  # Centrage sur l'Europe
         showcoastlines=True, coastlinecolor="Black",
         visible=True,
-        projection_scale=5  # Ajuster l'échelle de la projection pour un zoom plus serré
+        projection_scale=5  # Zoom ajusté
     )
 
-    # Ajuster les limites de zoom pour mieux se concentrer sur l'Europe
+    # Affinage de l'affichage de la carte
     fig.update_layout(
         geo=dict(
             scope='europe',
@@ -219,8 +224,9 @@ def load_and_display_soil_map():
         )
     )
 
-    # Afficher la carte dans Streamlit
+    # Affichage de la carte dans Streamlit
     st.plotly_chart(fig, use_container_width=True)
+
 
 
 def load_data():
