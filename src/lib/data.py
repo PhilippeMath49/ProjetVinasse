@@ -10,10 +10,14 @@ class Data:
     #Pour extraire les csv de UN tradedata
     def export_data_extraction(csvname, csvworldname, csvexportname):
         wineexport_df = pd.read_csv(csvname, encoding='ISO-8859-1')  # L'encoding est uniquement pour les csv de UN Tradedata
+        wineexport_df = wineexport_df.drop(['typeCode', 'freqCode', 'refMonth', 'refYear', 'period', 'reporterCode', 'reporterDesc', 'flowDesc', 'partnerCode','partnerDesc','partner2Code','partner2ISO','partner2Desc','classificationCode', 'classificationSearchCode','cmdDesc','aggrLevel','isLeaf','customsCode','customsDesc','mosCode','motCode','motDesc','qty','isQtyEstimated','altQtyUnitCode','altQtyUnitAbbr','altQty','isAltQtyEstimated','netWgt','isNetWgtEstimated','grossWgt','isGrossWgtEstimated','cifvalue','fobvalue','primaryValue','legacyEstimationFlag','isReported','isAggregate'], axis=1)
+
         winexportworld_df = wineexport_df[wineexport_df['partnerISO'].str.contains('World', na=False)]
         wineexport_df = wineexport_df[~wineexport_df['partnerISO'].str.contains('World', na=False)]
+
         wineexport_df.to_csv(csvexportname, index=False)
         winexportworld_df.to_csv(csvworldname, index=False)
+        return print("done", csvname)
 
     def data_extraction(csv):
         """
