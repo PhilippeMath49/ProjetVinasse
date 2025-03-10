@@ -168,13 +168,13 @@ def load_and_display_soil_map():
     # Charger le fichier CSV
     df = pd.read_csv("src/data/LUCAS-SOIL-2018.csv")  # Remplacez par le chemin réel du fichier CSV
 
-    # Vérifier la présence des colonnes nécessaires
-    if "TH_LAT" not in df.columns or "TH_LONG" not in df.columns or "LC0_Desc" not in df.columns:
-        st.error("Colonnes nécessaires (latitude, longitude, type de sol) manquantes.")
+    required_columns = ["TH_LAT", "TH_LONG", "pH_CaCl2", "pH_H2O", "EC", "OC", "CaCO3", "P", "N", "K", "Ox_Al", "Ox_Fe"]
+    if not all(col in df.columns for col in required_columns):
+        st.error("Colonnes nécessaires (latitude, longitude, composés chimiques) manquantes.")
         return
     
-    # Nettoyer les données : supprimer les lignes où les latitudes ou longitudes sont manquantes
-    df = df.dropna(subset=["TH_LAT", "TH_LONG", "LC0_Desc"])
+    # Nettoyer les données : supprimer les lignes où les valeurs essentielles sont manquantes
+    df = df.dropna(subset=required_columns)
     
     # Limiter les données aux zones géographiques de l'Europe pour améliorer les performances
     df_europe = df[(df["TH_LAT"] > 35) & (df["TH_LAT"] < 72) & (df["TH_LONG"] > -25) & (df["TH_LONG"] < 40)]
@@ -182,17 +182,19 @@ def load_and_display_soil_map():
     # Réduire la quantité de données (échantillonnage)
     sample_size = 1000  # Limiter à 1000 points pour éviter un trop grand nombre de points
     if len(df_europe) > sample_size:
-        df_europe = df_europe.sample(n=sample_size, random_state=42)  # Échantillonnage aléatoire des données
+        df_europe = df_europe.sample(n=sample_size, random_state=42)
+    
+    # Trouver le composé chimique dominant pour chaque point
+    chem_columns = ["pH_CaCl2", "pH_H2O", "EC", "OC", "CaCO3", "P", "N", "K", "Ox_Al", "Ox_Fe"]
+    df_europe["Dominant_Chemical"] = df_europe[chem_columns].idxmax(axis=1)
     
     # Créer la carte Plotly
     fig = px.scatter_geo(df_europe,
                          lat="TH_LAT", 
                          lon="TH_LONG", 
-                         color="LC0_Desc", 
-                         hover_name="POINTID",  # Afficher l'ID unique du point de l'enquête
-                         color_continuous_scale="Viridis", 
-                         title="Carte des Types de Sol en Europe",
-                         labels={"LC0_Desc": "Type de Sol"},
+                         color="Dominant_Chemical", 
+                         hover_name="Dominant_Chemical",  # Afficher le composé dominant au survol
+                         title="Carte des Composés Chimiques Dominants en Europe",
                          template="plotly_dark")
     
     # Ajuster la projection de la carte et centrer sur l'Europe
