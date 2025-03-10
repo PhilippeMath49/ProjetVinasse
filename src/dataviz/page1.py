@@ -98,6 +98,63 @@ def top_varieties_chart():
     
     st.subheader("Top 10 des variétés de cépages les plus populaires avec prix moyens")
     st.plotly_chart(fig)
+
+
+def price_comparison_chart():
+    df = pd.read_csv("src/data/winemag.csv")
+    # Calcul du prix moyen par pays avec outliers
+    avg_price_country = df.groupby("country")["price"].mean().sort_values(ascending=False).head(10)
+
+    # Détection des outliers selon Tukey
+    Q1 = df["price"].quantile(0.25)
+    Q3 = df["price"].quantile(0.75)
+    IQR = Q3 - Q1
+    lower_bound = Q1 - 1.5 * IQR
+    upper_bound = Q3 + 1.5 * IQR
+
+    # Filtrer les prix sans les outliers
+    df_no_outliers = df[(df["price"] >= lower_bound) & (df["price"] <= upper_bound)]
+
+    # Calcul du prix moyen par pays sans outliers
+    avg_price_country_no_outliers = (
+        df_no_outliers.groupby("country")["price"]
+        .mean()
+        .sort_values(ascending=False)
+        .head(10)
+    )
+
+    # Création de la figure avec outliers
+    fig_with_outliers = px.bar(
+        x=avg_price_country.index,
+        y=avg_price_country.values,
+        labels={"x": "Pays", "y": "Prix moyen ($)"},
+        title="Prix moyen des vins par pays (Top 10)",
+        color=avg_price_country.index,
+        color_continuous_scale="Viridis"
+    )
+
+    # Création de la figure sans outliers
+    fig_no_outliers = px.bar(
+        x=avg_price_country_no_outliers.index,
+        y=avg_price_country_no_outliers.values,
+        labels={"x": "Pays", "y": "Prix moyen ($)"},
+        title="Prix moyen des vins par pays (Top 10) - Sans Outliers",
+        color=avg_price_country_no_outliers.index,
+        color_continuous_scale="Viridis"
+    )
+
+    # Affichage côte à côte des deux graphiques dans Streamlit
+    st.subheader("Comparaison des prix moyens des vins par pays")
+    
+    col1, col2 = st.columns(2)
+
+    with col1:
+        st.plotly_chart(fig_with_outliers, use_container_width=True)
+
+    with col2:
+        st.plotly_chart(fig_no_outliers, use_container_width=True)
+
+
 def load_data():
     csv_path = "src/data/wine-production/wine-production.csv"
     shapefile_path = "src/map/ne_110m_admin_0_countries/ne_110m_admin_0_countries.shp"
@@ -127,3 +184,4 @@ def general():
     with tabs[1]:
         top_countries_chart()
         top_varieties_chart()
+        price_comparison_chart()
