@@ -50,21 +50,6 @@ def distrib_meanscore():
     st.write("La majorité des vins ont des scores compris entre 85 et 90 points.")
     st.write("Il y a des vins exceptionnels avec des scores supérieurs à 90 points.")
 
-def load_data():
-    csv_path = "src/data/wine-production/wine-production.csv"
-    shapefile_path = "src/map/ne_110m_admin_0_countries/ne_110m_admin_0_countries.shp"
-    
-    if not os.path.exists(csv_path) or not os.path.exists(shapefile_path):
-        st.error("Fichiers de données manquants ! Vérifiez votre déploiement.")
-        return None, None
-    
-    wine_df = pd.read_csv(csv_path)
-    wine_df['Year'] = wine_df['Year'].astype(int)
-    wine_df['Entity'] = wine_df['Entity'].str.replace(r"\s\([A-Z]{3}\)", "", regex=True)
-    
-    world = gpd.read_file(shapefile_path)
-    return wine_df, world
-
 def top_countries_chart():
     df = pd.read_csv("src/data/winemag.csv")
     top_countries = df["country"].value_counts().head(10)
@@ -79,6 +64,25 @@ def top_countries_chart():
     st.plotly_chart(fig)
 
 def top_varieties_chart():
+    df = pd.read_csv("src/data/winemag.csv")
+    top_varieties = df["variety"].value_counts().head(10)
+    mean_prices = df.groupby("variety")["price"].mean().reindex(top_varieties.index)
+    
+    fig = go.Figure()
+    
+    fig.add_trace(go.Bar(x=top_varieties.index, y=top_varieties.values, name="Nombre de vins",
+                         marker_color=px.colors.sequential.Magma[4]))
+    
+    fig.add_trace(go.Scatter(x=top_varieties.index, y=mean_prices, name="Prix moyen",
+                             mode='lines+markers', line=dict(color='blue', width=2)))
+    
+    fig.update_layout(title="Top 10 des variétés de cépages les plus populaires avec prix moyens",
+                      xaxis_title="Variété",
+                      yaxis_title="Nombre de vins",
+                      yaxis2=dict(title="Prix moyen (en $)", overlaying='y', side='right'))
+    
+    st.subheader("Top 10 des variétés de cépages les plus populaires avec prix moyens")
+    st.plotly_chart(fig)
     df = pd.read_csv("src/data/winemag.csv")
     top_varieties = df["variety"].value_counts().head(10)
     mean_prices = df.groupby("variety")["price"].mean().reindex(top_varieties.index)
