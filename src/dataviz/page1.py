@@ -113,6 +113,9 @@ def load_data():
     
     world = gpd.read_file(shapefile_path)
     return wine_df, world
+
+
+
 def general():
     # Interface principale avec onglets
     st.title("Tableau de Bord sur le Vin 🍷")
