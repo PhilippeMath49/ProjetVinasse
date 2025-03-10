@@ -112,42 +112,27 @@ def price_comparison_chart():
     lower_bound = Q1 - 1.5 * IQR
     upper_bound = Q3 + 1.5 * IQR
 
-    # Filtrer les prix sans les outliers
-    df_no_outliers = df[(df["price"] >= lower_bound) & (df["price"] <= upper_bound)]
+    # Filtrer les prix sans les outliers si nécessaire
+    remove_outliers = st.checkbox("Retirer les outliers", value=False)
 
-    # Calcul du prix moyen par pays sans outliers
-    avg_price_country_no_outliers = (
-        df_no_outliers.groupby("country")["price"]
-        .mean()
-        .sort_values(ascending=False)
-        .head(10)
-    )
+    if remove_outliers:
+        df_no_outliers = df[(df["price"] >= lower_bound) & (df["price"] <= upper_bound)]
+        avg_price_country = df_no_outliers.groupby("country")["price"].mean().sort_values(ascending=False).head(10)
+        title = "Prix moyen des vins par pays (Top 10) - Sans Outliers"
+    else:
+        title = "Prix moyen des vins par pays (Top 10) - Avec Outliers"
 
-    # Création de la figure avec outliers
-    fig_with_outliers = px.bar(
+    # Création du graphique
+    fig = px.bar(
         x=avg_price_country.index,
         y=avg_price_country.values,
         labels={"x": "Pays", "y": "Prix moyen ($)"},
-        title="Prix moyen des vins par pays (Top 10)",
+        title=title,
         color=avg_price_country.index,
         color_continuous_scale="Viridis"
     )
 
-    # Création de la figure sans outliers
-    fig_no_outliers = px.bar(
-        x=avg_price_country_no_outliers.index,
-        y=avg_price_country_no_outliers.values,
-        labels={"x": "Pays", "y": "Prix moyen ($)"},
-        title="Prix moyen des vins par pays (Top 10) - Sans Outliers",
-        color=avg_price_country_no_outliers.index,
-        color_continuous_scale="Viridis"
-    )
-
-    st.subheader("Comparaison des prix moyens des vins par pays")
-
-    # Utilisation de checkboxes pour afficher ou masquer les graphiques
-    show_with_outliers = st.checkbox("Afficher les prix avec outliers", value=True)
-    show_no_outliers = st.checkbox("Afficher les prix sans outliers", value=True)
+    st.plotly_chart(fig, use_container_width=True)
 
     col1, col2 = st.columns(2)
 
