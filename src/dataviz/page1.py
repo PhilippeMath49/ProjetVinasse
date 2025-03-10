@@ -99,6 +99,20 @@ def top_varieties_chart():
     st.subheader("Top 10 des variétés de cépages les plus populaires avec prix moyens")
     st.plotly_chart(fig)
 
+def load_data():
+    csv_path = "src/data/wine-production/wine-production.csv"
+    shapefile_path = "src/map/ne_110m_admin_0_countries/ne_110m_admin_0_countries.shp"
+    
+    if not os.path.exists(csv_path) or not os.path.exists(shapefile_path):
+        st.error("Fichiers de données manquants ! Vérifiez votre déploiement.")
+        return None, None
+    
+    wine_df = pd.read_csv(csv_path)
+    wine_df['Year'] = wine_df['Year'].astype(int)
+    wine_df['Entity'] = wine_df['Entity'].str.replace(r"\s\([A-Z]{3}\)", "", regex=True)
+    
+    world = gpd.read_file(shapefile_path)
+    return wine_df, world
 def general():
     # Interface principale avec onglets
     st.title("Tableau de Bord sur le Vin 🍷")
