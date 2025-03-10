@@ -112,37 +112,56 @@ def price_comparison_chart():
     lower_bound = Q1 - 1.5 * IQR
     upper_bound = Q3 + 1.5 * IQR
 
-    # Filtrer les prix sans les outliers si nécessaire
-    remove_outliers = st.checkbox("Retirer les outliers", value=False)
+    # Filtrer les prix sans les outliers
+    df_no_outliers = df[(df["price"] >= lower_bound) & (df["price"] <= upper_bound)]
 
-    if remove_outliers:
-        df_no_outliers = df[(df["price"] >= lower_bound) & (df["price"] <= upper_bound)]
-        avg_price_country = df_no_outliers.groupby("country")["price"].mean().sort_values(ascending=False).head(10)
-        title = "Prix moyen des vins par pays (Top 10) - Sans Outliers"
-    else:
-        title = "Prix moyen des vins par pays (Top 10) - Avec Outliers"
+    # Calcul du prix moyen par pays sans outliers
+    avg_price_country_no_outliers = (
+        df_no_outliers.groupby("country")["price"]
+        .mean()
+        .sort_values(ascending=False)
+        .head(10)
+    )
 
-    # Création du graphique
-    fig = px.bar(
+    # Création de la figure avec outliers
+    fig_with_outliers = px.bar(
         x=avg_price_country.index,
         y=avg_price_country.values,
         labels={"x": "Pays", "y": "Prix moyen ($)"},
-        title=title,
+        title="Prix moyen des vins par pays (Top 10)",
         color=avg_price_country.index,
         color_continuous_scale="Viridis"
     )
 
-    st.plotly_chart(fig, use_container_width=True)
+    # Création de la figure sans outliers
+    fig_no_outliers = px.bar(
+        x=avg_price_country_no_outliers.index,
+        y=avg_price_country_no_outliers.values,
+        labels={"x": "Pays", "y": "Prix moyen ($)"},
+        title="Prix moyen des vins par pays (Top 10) - Sans Outliers",
+        color=avg_price_country_no_outliers.index,
+        color_continuous_scale="Viridis"
+    )
 
-    col1, col2 = st.columns(2)
+    st.subheader("Comparaison des prix moyens des vins par pays")
 
-    if show_with_outliers:
+    # Utilisation de checkboxes pour afficher ou masquer les graphiques
+    show_with_outliers = st.checkbox("Afficher les prix avec outliers", value=True)
+    show_no_outliers = st.checkbox("Afficher les prix sans outliers", value=True)
+
+    if show_with_outliers and show_no_outliers:
+        # Afficher côte à côte si les deux graphiques sont activés
+        col1, col2 = st.columns(2)
         with col1:
             st.plotly_chart(fig_with_outliers, use_container_width=True)
-
-    if show_no_outliers:
         with col2:
             st.plotly_chart(fig_no_outliers, use_container_width=True)
+    elif show_with_outliers:
+        # Afficher seulement le graphique avec outliers en pleine largeur
+        st.plotly_chart(fig_with_outliers, use_container_width=True)
+    elif show_no_outliers:
+        # Afficher seulement le graphique sans outliers en pleine largeur
+        st.plotly_chart(fig_no_outliers, use_container_width=True)
 
 
 def load_data():
