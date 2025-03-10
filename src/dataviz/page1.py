@@ -403,7 +403,29 @@ def load_data():
     world = gpd.read_file(shapefile_path)
     return wine_df, world
 
+data = {
+    "Facteur": [
+        "Nutriments du sol", "pH du sol", "Type de sol",
+        "Durée et intensité du soleil", "Température", "Cycle jour/nuit"
+    ],
+    "Impact sur la production de sucre (et donc sur le taux d'alcool)": [
+        "Un sol riche en éléments nutritifs (azote, potassium) favorise la croissance de la vigne, mais un excès peut réduire la concentration en sucre des raisins.",
+        "Le pH du sol affecte la disponibilité des nutriments. Un pH mal équilibré (trop acide ou trop alcalin) peut limiter la croissance et la production de sucre des raisins.",
+        "Les sols bien drainés (sableux) permettent une maturation plus lente des raisins, tandis que les sols plus lourds (argileux ou calcaires) peuvent augmenter la concentration en sucre.",
+        "Un ensoleillement prolongé et intense favorise la photosynthèse, augmentant la production de sucre dans les raisins, ce qui peut augmenter le taux d'alcool du vin.",
+        "Les températures plus élevées accélèrent la maturation des raisins et favorisent l'accumulation de sucre, ce qui donne un vin avec un taux d'alcool plus élevé.",
+        "Un grand écart thermique entre le jour et la nuit peut favoriser l'accumulation de sucre tout en maintenant l'acidité des raisins, créant ainsi un équilibre propice à une bonne fermentation."
+    ]
+}
+def alcool():
+    # Création du DataFrame
+    df = pd.DataFrame(data)
 
+    # Affichage du titre
+    st.title("Impact des Facteurs Environnementaux sur le Taux d'Alcool du Vin")
+
+    # Affichage du tableau
+    st.table(df)
 
 def general():
     # Interface principale avec onglets
@@ -428,3 +450,4 @@ def general():
     with tabs[3]:
         # load_and_display_sunshine_map()
         load_and_display_soil_sunlight_map()
+        alcool()
