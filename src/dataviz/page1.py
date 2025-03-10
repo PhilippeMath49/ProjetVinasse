@@ -253,4 +253,6 @@ def general():
         price_comparison_chart()
         
     with tabs[2]:
+        # add an image
+        st.image("src/img/terre.gif", width=200)
         load_and_display_soil_map()
