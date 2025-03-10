@@ -322,7 +322,7 @@ def load_data():
 def general():
     # Interface principale avec onglets
     st.title("Tableau de Bord sur le Vin 🍷")
-    tabs = st.tabs(["📊 Distribution des Notes et Analyse des Scores","📈 Variété et prix ","sol"])
+    tabs = st.tabs(["📊 Distribution des Notes et Analyse des Scores","📈 Variété et prix ","sol","Soleil "])
 
     with tabs[0]:
         distrib_note()
@@ -337,4 +337,6 @@ def general():
         # add an image
         st.image("src/img/terre.gif", width=700)
         load_and_display_soil_map()
+
+    with tabs[3]:
         load_and_display_sunshine_map()
