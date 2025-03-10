@@ -302,6 +302,91 @@ def load_and_display_sunshine_map():
     # Afficher la carte dans Streamlit
     st.plotly_chart(fig, use_container_width=True)
 
+
+def load_and_display_soil_sunlight_map():
+    st.title("Cartes de l'Ensoleillement et des Sols en France")
+
+    # Charger les données d'ensoleillement
+    df_soleil = pd.read_csv("src/data/temps-densoleillement-par-an-par-departement-feuille-1.csv")
+
+    # Normaliser les noms des départements
+    df_soleil["Departements"] = df_soleil["Departements"].str.upper()
+
+    # Dictionnaire des codes INSEE
+    codes_insee = {
+        "AIN": "01", "AISNE": "02", "ALLIER": "03", "ALPES-DE-HAUTE-PROVENCE": "04", "HAUTES-ALPES": "05",
+        "ALPES-MARITIMES": "06", "ARDÈCHE": "07", "ARDENNES": "08", "ARIÈGE": "09", "AUBE": "10",
+        "AUDE": "11", "AVEYRON": "12", "BOUCHES-DU-RHÔNE": "13", "CALVADOS": "14", "CANTAL": "15",
+        "CHARENTE": "16", "CHARENTE-MARITIME": "17", "CHER": "18", "CORRÈZE": "19", "CÔTE-D'OR": "21",
+        "CÔTES-D'ARMOR": "22", "CREUSE": "23", "DORDOGNE": "24", "DOUBS": "25", "DRÔME": "26",
+        "EURE": "27", "EURE-ET-LOIR": "28", "FINISTÈRE": "29", "GARD": "30", "HAUTE-GARONNE": "31",
+        "GERS": "32", "GIRONDE": "33", "HÉRAULT": "34", "ILLE-ET-VILAINE": "35", "INDRE": "36",
+        "INDRE-ET-LOIRE": "37", "ISÈRE": "38", "JURA": "39", "LANDES": "40", "LOIR-ET-CHER": "41",
+        "LOIRE": "42", "HAUTE-LOIRE": "43", "LOIRE-ATLANTIQUE": "44", "LOIRET": "45", "LOT": "46",
+        "LOT-ET-GARONNE": "47", "LOZÈRE": "48", "MAINE-ET-LOIRE": "49", "MANCHE": "50", "MARNE": "51",
+        "HAUTE-MARNE": "52", "MAYENNE": "53", "MEURTHE-ET-MOSELLE": "54", "MEUSE": "55", "MORBIHAN": "56",
+        "MOSELLE": "57", "NIÈVRE": "58", "NORD": "59", "OISE": "60", "ORNE": "61", "PAS-DE-CALAIS": "62",
+        "PUY-DE-DÔME": "63", "PYRÉNÉES-ATLANTIQUES": "64", "HAUTES-PYRÉNÉES": "65", "PYRÉNÉES-ORIENTALES": "66",
+        "BAS-RHIN": "67", "HAUT-RHIN": "68", "RHÔNE": "69", "HAUTE-SAÔNE": "70", "SAÔNE-ET-LOIRE": "71",
+        "SARTHE": "72", "SAVOIE": "73", "HAUTE-SAVOIE": "74", "PARIS": "75", "SEINE-MARITIME": "76",
+        "SEINE-ET-MARNE": "77", "YVELINES": "78", "DEUX-SÈVRES": "79", "SOMME": "80", "TARN": "81",
+        "TARN-ET-GARONNE": "82", "VAR": "83", "VAUCLUSE": "84", "VENDÉE": "85", "VIENNE": "86",
+        "HAUTE-VIENNE": "87", "VOSGES": "88", "YONNE": "89", "TERRITOIRE DE BELFORT": "90",
+        "ESSONNE": "91", "HAUTS-DE-SEINE": "92", "SEINE-SAINT-DENIS": "93", "VAL-DE-MARNE": "94",
+        "VAL-D'OISE": "95"
+    }
+    
+    df_soleil["Code_INSEE"] = df_soleil["Departements"].map(codes_insee)
+
+    # Charger les données de sol
+    df_sol = pd.read_csv("src/data/LUCAS-SOIL-2018.csv")
+    chem_columns = ["pH_CaCl2", "pH_H2O", "EC", "OC", "CaCO3", "P", "N", "K", "Ox_Al", "Ox_Fe"]
+    df_sol = df_sol.dropna(subset=["TH_LAT", "TH_LONG"] + chem_columns)
+    df_sol["Dominant_Chemical"] = df_sol[chem_columns].idxmax(axis=1)
+
+    # Charger le fichier GeoJSON des départements
+    geojson_url = "https://raw.githubusercontent.com/gregoiredavid/france-geojson/master/departements.geojson"
+    geojson_data = requests.get(geojson_url).json()
+
+    # Création de la carte d'ensoleillement
+    fig_sunlight = px.choropleth_mapbox(
+        df_soleil,
+        geojson=geojson_data,
+        locations="Code_INSEE",
+        featureidkey="properties.code",
+        color="ensoleillement (jours/an)",
+        color_continuous_scale="YlOrRd",
+        mapbox_style="carto-positron",
+        zoom=5,
+        center={"lat": 46.603354, "lon": 1.888334},
+        opacity=0.7
+    )
+    fig_sunlight.update_layout(title="Carte de l'ensoleillement en France (jours/an)")
+
+    # Création de la carte des sols
+    fig_soil = px.scatter_geo(
+        df_sol,
+        lat="TH_LAT", 
+        lon="TH_LONG", 
+        color="Dominant_Chemical", 
+        hover_data=chem_columns,
+        title="Carte des Composés Chimiques Dominants en Europe",
+        template="plotly_dark"
+    )
+    fig_soil.update_geos(
+        projection_type="mercator",
+        center={"lat": 50, "lon": 10},
+        showcoastlines=True, coastlinecolor="Black",
+        projection_scale=5
+    )
+
+    # Affichage des cartes dans Streamlit
+    st.plotly_chart(fig_sunlight, use_container_width=True)
+    st.plotly_chart(fig_soil, use_container_width=True)
+
+
+
+
 def load_data():
     csv_path = "src/data/wine-production/wine-production.csv"
     shapefile_path = "src/map/ne_110m_admin_0_countries/ne_110m_admin_0_countries.shp"
@@ -337,6 +422,8 @@ def general():
         # add an image
         st.image("src/img/terre.gif", width=700)
         load_and_display_soil_map()
+        
 
     with tabs[3]:
-        load_and_display_sunshine_map()
+        # load_and_display_sunshine_map()
+        load_and_display_soil_sunlight_map()
