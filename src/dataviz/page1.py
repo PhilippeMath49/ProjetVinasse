@@ -7,6 +7,7 @@ import numpy as np
 from scipy.stats import norm
 import plotly.graph_objects as go
 import requests
+import plotly as plt
 
 def clean_wine_data(df):
     df.dropna(subset=["Entity", "Wine"], inplace=True)
@@ -403,7 +404,9 @@ def load_data():
     world = gpd.read_file(shapefile_path)
     return wine_df, world
 
-data = {
+
+def alcool():
+    data = {
     "Facteur": [
         "Nutriments du sol", "pH du sol", "Type de sol",
         "Durée et intensité du soleil", "Température", "Cycle jour/nuit"
@@ -415,17 +418,42 @@ data = {
         "Un ensoleillement prolongé et intense favorise la photosynthèse, augmentant la production de sucre dans les raisins, ce qui peut augmenter le taux d'alcool du vin.",
         "Les températures plus élevées accélèrent la maturation des raisins et favorisent l'accumulation de sucre, ce qui donne un vin avec un taux d'alcool plus élevé.",
         "Un grand écart thermique entre le jour et la nuit peut favoriser l'accumulation de sucre tout en maintenant l'acidité des raisins, créant ainsi un équilibre propice à une bonne fermentation."
+    ],
+    "Tendance alcool": [
+        "Augmentation", "Diminution", "Augmentation",
+        "Augmentation", "Augmentation", "Augmentation"
     ]
 }
-def alcool():
+
     # Création du DataFrame
-    df = pd.DataFrame(data)
+
+    # Fonction pour générer un mini graphe
+    def plot_trend(tendance):
+        fig, ax = plt.subplots(figsize=(1.5, 1.5))
+        if tendance == "Augmentation":
+            ax.barh([0], [1], color='green')
+        else:
+            ax.barh([0], [1], color='red')
+        ax.set_xlim(0, 1)
+        ax.set_yticks([])
+        ax.set_xticks([])
+
+        return fig
 
     # Affichage du titre
     st.title("Impact des Facteurs Environnementaux sur le Taux d'Alcool du Vin")
-
-    # Affichage du tableau
-    st.table(df)
+    df = pd.DataFrame(data)
+    # Affichage du tableau avec graphiques
+    for i in range(len(df)):
+        col1, col2 = st.columns([4, 1])  # Définir deux colonnes (plus large à gauche)
+        
+        with col1:
+            st.write(f"**{df['Facteur'][i]}**")
+            st.write(df['Impact sur la production de sucre (et donc sur le taux d\'alcool)'][i])
+        
+        with col2:
+            fig = plot_trend(df['Tendance alcool'][i])
+            st.pyplot(fig)
 
 def general():
     # Interface principale avec onglets
