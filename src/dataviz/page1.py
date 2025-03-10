@@ -254,5 +254,5 @@ def general():
         
     with tabs[2]:
         # add an image
-        st.image("src/img/terre.gif", width=200)
+        st.image("src/img/terre.gif", width=700)
         load_and_display_soil_map()
