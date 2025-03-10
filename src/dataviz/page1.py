@@ -166,7 +166,7 @@ def price_comparison_chart():
 
 def load_and_display_soil_map():
     # Charger le fichier CSV
-    df = pd.read_csv("../data/LUCAS-SOIL-2018.csv")  # Remplacez par le chemin réel du fichier CSV
+    df = pd.read_csv("src/data/LUCAS-SOIL-2018.csv")  # Remplacez par le chemin réel du fichier CSV
 
     # Vérifier la présence des colonnes nécessaires
     if "TH_LAT" not in df.columns or "TH_LONG" not in df.columns or "LC0_Desc" not in df.columns:
