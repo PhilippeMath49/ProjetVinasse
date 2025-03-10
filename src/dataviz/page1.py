@@ -338,7 +338,17 @@ def load_and_display_soil_sunlight_map():
     # Charger les données de sol
     df_sol = pd.read_csv("src/data/LUCAS-SOIL-2018.csv")
     chem_columns = ["pH_CaCl2", "pH_H2O", "EC", "OC", "CaCO3", "P", "N", "K", "Ox_Al", "Ox_Fe"]
+
+    # Assurez-vous que toutes les colonnes de chimie sont numériques
+    df_sol[chem_columns] = df_sol[chem_columns].apply(pd.to_numeric, errors='coerce')
+
+    # Supprimer les lignes où il manque des valeurs dans les colonnes pertinentes
     df_sol = df_sol.dropna(subset=["TH_LAT", "TH_LONG"] + chem_columns)
+
+    # Remplir les valeurs NaN restantes (si nécessaire)
+    df_sol[chem_columns] = df_sol[chem_columns].fillna(-float('inf'))  # Remplacer les NaN par -inf
+
+    # Calculer la colonne Dominant_Chemical
     df_sol["Dominant_Chemical"] = df_sol[chem_columns].idxmax(axis=1)
 
     # Charger le fichier GeoJSON des départements
@@ -377,7 +387,6 @@ def load_and_display_soil_sunlight_map():
     # Affichage des cartes dans Streamlit
     st.plotly_chart(fig_sunlight, use_container_width=True)
     st.plotly_chart(fig_soil, use_container_width=True)
-
 
 def load_data():
     csv_path = "src/data/wine-production/wine-production.csv"
