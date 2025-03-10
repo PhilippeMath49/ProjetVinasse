@@ -4,7 +4,7 @@ import json
 import requests
 
 # Charger les données
-df_soleil = pd.read_csv("data/temps-densoleillement-par-an-par-departement-feuille-1.csv")
+df_soleil = pd.read_csv("src/data/temps-densoleillement-par-an-par-departement-feuille-1.csv")
 
 # Vérifier le nom exact des colonnes
 print(df_soleil.columns)

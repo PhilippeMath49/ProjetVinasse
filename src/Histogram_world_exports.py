@@ -4,7 +4,7 @@ import pandas as pd
 import plotly.express as px
 
 # Charger le fichier fusionné
-df_wine_export_world = pd.read_csv("data/wineexports/allwine_export_world_no_empty.csv")
+df_wine_export_world = pd.read_csv("src/data/wineexports/allwine_export_world_no_empty.csv")
 
 # Choisir l'année à analyser
 annee_cible = 2023  # Remplace par l'année que tu veux
