@@ -176,19 +176,41 @@ def load_and_display_soil_map():
     # Nettoyer les données : supprimer les lignes où les latitudes ou longitudes sont manquantes
     df = df.dropna(subset=["TH_LAT", "TH_LONG", "LC0_Desc"])
     
+    # Limiter les données aux zones géographiques de l'Europe pour améliorer les performances
+    df_europe = df[(df["TH_LAT"] > 35) & (df["TH_LAT"] < 72) & (df["TH_LONG"] > -25) & (df["TH_LONG"] < 40)]
+    
     # Créer la carte Plotly
-    fig = px.scatter_geo(df,
+    fig = px.scatter_geo(df_europe,
                          lat="TH_LAT", 
                          lon="TH_LONG", 
                          color="LC0_Desc", 
                          hover_name="POINTID",  # Afficher l'ID unique du point de l'enquête
                          color_continuous_scale="Viridis", 
-                         title="Carte des Types de Sol",
+                         title="Carte des Types de Sol en Europe",
                          labels={"LC0_Desc": "Type de Sol"},
                          template="plotly_dark")
     
-    # Ajuster la projection de la carte
-    fig.update_geos(projection_type="mercator", showcoastlines=True, coastlinecolor="Black")
+    # Ajuster la projection de la carte et centrer sur l'Europe
+    fig.update_geos(
+        projection_type="mercator",
+        center={"lat": 50, "lon": 10},  # Centrer la carte sur l'Europe
+        showcoastlines=True, coastlinecolor="Black",
+        visible=True,
+        projection_scale=5  # Ajuster l'échelle de la projection pour un zoom plus serré
+    )
+
+    # Ajuster les limites de zoom pour mieux se concentrer sur l'Europe
+    fig.update_layout(
+        geo=dict(
+            scope='europe',
+            projection_scale=6,
+            showland=True,
+            landcolor="white",
+            subunitcolor="grey",
+            countrycolor="grey",
+            coastlinecolor="Black"
+        )
+    )
 
     # Afficher la carte dans Streamlit
     st.plotly_chart(fig, use_container_width=True)
