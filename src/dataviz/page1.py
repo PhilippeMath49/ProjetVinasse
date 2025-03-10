@@ -94,11 +94,10 @@ def top_varieties_chart():
     fig.update_layout(title="Top 10 des variétés de cépages les plus populaires avec prix moyens",
                       xaxis_title="Variété",
                       yaxis_title="Nombre de vins",
-                      yaxis2=dict(title="Prix moyen (en $)", overlaying='y', side='right'))
+                      yaxis2=dict(title="Prix moyen (en $)", overlaying='y', side='right', showgrid=False))
     
     st.subheader("Top 10 des variétés de cépages les plus populaires avec prix moyens")
     st.plotly_chart(fig)
-
 def load_data():
     csv_path = "src/data/wine-production/wine-production.csv"
     shapefile_path = "src/map/ne_110m_admin_0_countries/ne_110m_admin_0_countries.shp"
