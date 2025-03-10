@@ -313,12 +313,12 @@ def load_and_display_soil_sunlight_map():
 
     # Dictionnaire des codes INSEE
     codes_insee = {
-        "AIN": "01", "AISNE": "02", "ALLIER": "03", "ALPES-DE-HAUTE-PROVENCE": "04", "HAUTES-ALPES": "05",
+        "AIN": "01", "AISNE": "02", "ALLIER": "03", "ALPES DE HAUTE PROVENCE": "04", "HAUTES-ALPES": "05",
         "ALPES-MARITIMES": "06", "ARDÈCHE": "07", "ARDENNES": "08", "ARIÈGE": "09", "AUBE": "10",
         "AUDE": "11", "AVEYRON": "12", "BOUCHES-DU-RHÔNE": "13", "CALVADOS": "14", "CANTAL": "15",
-        "CHARENTE": "16", "CHARENTE-MARITIME": "17", "CHER": "18", "CORRÈZE": "19", "CÔTE-D'OR": "21",
-        "CÔTES-D'ARMOR": "22", "CREUSE": "23", "DORDOGNE": "24", "DOUBS": "25", "DRÔME": "26",
-        "EURE": "27", "EURE-ET-LOIR": "28", "FINISTÈRE": "29", "GARD": "30", "HAUTE-GARONNE": "31",
+        "CHARENTE": "16", "CHARENTE-MARITIME": "17", "CHER": "18", "CORRÈZE": "19", "CÔTE-D’OR": "21",
+        "CÔTES D'ARMOR": "22", "CREUSE": "23", "DORDOGNE": "24", "DOUBS": "25", "DRÔME": "26",
+        "EURE": "27", "EURE-ET-LOIRE": "28", "FINISTÈRE": "29", "GARD": "30", "HAUTE-GARONNE": "31",
         "GERS": "32", "GIRONDE": "33", "HÉRAULT": "34", "ILLE-ET-VILAINE": "35", "INDRE": "36",
         "INDRE-ET-LOIRE": "37", "ISÈRE": "38", "JURA": "39", "LANDES": "40", "LOIR-ET-CHER": "41",
         "LOIRE": "42", "HAUTE-LOIRE": "43", "LOIRE-ATLANTIQUE": "44", "LOIRET": "45", "LOT": "46",
@@ -330,7 +330,7 @@ def load_and_display_soil_sunlight_map():
         "SARTHE": "72", "SAVOIE": "73", "HAUTE-SAVOIE": "74", "PARIS": "75", "SEINE-MARITIME": "76",
         "SEINE-ET-MARNE": "77", "YVELINES": "78", "DEUX-SÈVRES": "79", "SOMME": "80", "TARN": "81",
         "TARN-ET-GARONNE": "82", "VAR": "83", "VAUCLUSE": "84", "VENDÉE": "85", "VIENNE": "86",
-        "HAUTE-VIENNE": "87", "VOSGES": "88", "YONNE": "89", "TERRITOIRE DE BELFORT": "90",
+        "HAUTE-VIENNE": "87", "VOSGES": "88", "YONNE": "89", "TERRITOIRE-DE-BELFORT": "90",
         "ESSONNE": "91", "HAUTS-DE-SEINE": "92", "SEINE-SAINT-DENIS": "93", "VAL-DE-MARNE": "94",
         "VAL-D'OISE": "95"
     }
