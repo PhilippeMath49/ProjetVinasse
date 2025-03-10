@@ -7,7 +7,7 @@ import numpy as np
 from scipy.stats import norm
 import plotly.graph_objects as go
 import requests
-import plotly as plt
+import matplotlib.pyplot as plt
 
 def clean_wine_data(df):
     df.dropna(subset=["Entity", "Wine"], inplace=True)
