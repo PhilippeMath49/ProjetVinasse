@@ -179,6 +179,11 @@ def load_and_display_soil_map():
     # Limiter les données aux zones géographiques de l'Europe pour améliorer les performances
     df_europe = df[(df["TH_LAT"] > 35) & (df["TH_LAT"] < 72) & (df["TH_LONG"] > -25) & (df["TH_LONG"] < 40)]
     
+    # Réduire la quantité de données (échantillonnage)
+    sample_size = 1000  # Limiter à 1000 points pour éviter un trop grand nombre de points
+    if len(df_europe) > sample_size:
+        df_europe = df_europe.sample(n=sample_size, random_state=42)  # Échantillonnage aléatoire des données
+    
     # Créer la carte Plotly
     fig = px.scatter_geo(df_europe,
                          lat="TH_LAT", 
