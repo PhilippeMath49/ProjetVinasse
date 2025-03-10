@@ -177,7 +177,14 @@ def load_and_display_soil_map():
         st.error("Colonnes nécessaires (latitude, longitude, composés chimiques) manquantes.")
         return
     
-    # Nettoyage des données : suppression des lignes avec des valeurs manquantes
+    # Remplacer les valeurs non numériques
+    df.replace({"< LOD>": None, "NA": None}, inplace=True)
+    
+    # Conversion des colonnes chimiques en numérique
+    for col in chem_columns:
+        df[col] = pd.to_numeric(df[col], errors='coerce')
+    
+    # Suppression des lignes avec des valeurs manquantes
     df = df.dropna(subset=required_columns)
     
     # Filtrage des données pour se concentrer sur l'Europe
@@ -197,7 +204,7 @@ def load_and_display_soil_map():
         lat="TH_LAT", 
         lon="TH_LONG", 
         color="Dominant_Chemical", 
-        hover_data=chem_columns,  # Afficher les valeurs des composés chimiques au survol
+        hover_data=chem_columns + ["POINTID"],  # Afficher les valeurs des composés chimiques et l'ID au survol
         title="Carte des Composés Chimiques Dominants en Europe",
         template="plotly_dark"
     )
