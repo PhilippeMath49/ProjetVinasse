@@ -164,6 +164,36 @@ def price_comparison_chart():
         st.plotly_chart(fig_no_outliers, use_container_width=True)
 
 
+def load_and_display_soil_map():
+    # Charger le fichier CSV
+    df = pd.read_csv("../data/LUCAS-SOIL-2018.csv")  # Remplacez par le chemin réel du fichier CSV
+
+    # Vérifier la présence des colonnes nécessaires
+    if "TH_LAT" not in df.columns or "TH_LONG" not in df.columns or "LC0_Desc" not in df.columns:
+        st.error("Colonnes nécessaires (latitude, longitude, type de sol) manquantes.")
+        return
+    
+    # Nettoyer les données : supprimer les lignes où les latitudes ou longitudes sont manquantes
+    df = df.dropna(subset=["TH_LAT", "TH_LONG", "LC0_Desc"])
+    
+    # Créer la carte Plotly
+    fig = px.scatter_geo(df,
+                         lat="TH_LAT", 
+                         lon="TH_LONG", 
+                         color="LC0_Desc", 
+                         hover_name="POINTID",  # Afficher l'ID unique du point de l'enquête
+                         color_continuous_scale="Viridis", 
+                         title="Carte des Types de Sol",
+                         labels={"LC0_Desc": "Type de Sol"},
+                         template="plotly_dark")
+    
+    # Ajuster la projection de la carte
+    fig.update_geos(projection_type="mercator", showcoastlines=True, coastlinecolor="Black")
+
+    # Afficher la carte dans Streamlit
+    st.plotly_chart(fig, use_container_width=True)
+
+
 def load_data():
     csv_path = "src/data/wine-production/wine-production.csv"
     shapefile_path = "src/map/ne_110m_admin_0_countries/ne_110m_admin_0_countries.shp"
@@ -184,7 +214,7 @@ def load_data():
 def general():
     # Interface principale avec onglets
     st.title("Tableau de Bord sur le Vin 🍷")
-    tabs = st.tabs(["📊 Distribution des Notes et Analyse des Scores","📈 Variété et prix "])
+    tabs = st.tabs(["📊 Distribution des Notes et Analyse des Scores","📈 Variété et prix ","sol"])
 
     with tabs[0]:
         distrib_note()
@@ -194,3 +224,6 @@ def general():
         top_countries_chart()
         top_varieties_chart()
         price_comparison_chart()
+        
+    with tabs[2]:
+        load_and_display_soil_map()
