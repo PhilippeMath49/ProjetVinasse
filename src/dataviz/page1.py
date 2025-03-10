@@ -143,16 +143,21 @@ def price_comparison_chart():
         color_continuous_scale="Viridis"
     )
 
-    # Affichage côte à côte des deux graphiques dans Streamlit
     st.subheader("Comparaison des prix moyens des vins par pays")
-    
+
+    # Utilisation de checkboxes pour afficher ou masquer les graphiques
+    show_with_outliers = st.checkbox("Afficher les prix avec outliers", value=True)
+    show_no_outliers = st.checkbox("Afficher les prix sans outliers", value=True)
+
     col1, col2 = st.columns(2)
 
-    with col1:
-        st.plotly_chart(fig_with_outliers, use_container_width=True)
+    if show_with_outliers:
+        with col1:
+            st.plotly_chart(fig_with_outliers, use_container_width=True)
 
-    with col2:
-        st.plotly_chart(fig_no_outliers, use_container_width=True)
+    if show_no_outliers:
+        with col2:
+            st.plotly_chart(fig_no_outliers, use_container_width=True)
 
 
 def load_data():
