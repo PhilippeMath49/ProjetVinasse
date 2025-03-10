@@ -308,8 +308,6 @@ def load_and_display_soil_sunlight_map():
 
     # Charger les données d'ensoleillement
     df_soleil = pd.read_csv("src/data/temps-densoleillement-par-an-par-departement-feuille-1.csv")
-
-    # Normaliser les noms des départements
     df_soleil["Departements"] = df_soleil["Departements"].str.upper()
 
     # Dictionnaire des codes INSEE
@@ -335,7 +333,6 @@ def load_and_display_soil_sunlight_map():
         "ESSONNE": "91", "HAUTS-DE-SEINE": "92", "SEINE-SAINT-DENIS": "93", "VAL-DE-MARNE": "94",
         "VAL-D'OISE": "95"
     }
-    
     df_soleil["Code_INSEE"] = df_soleil["Departements"].map(codes_insee)
 
     # Charger les données de sol
@@ -363,28 +360,23 @@ def load_and_display_soil_sunlight_map():
     )
     fig_sunlight.update_layout(title="Carte de l'ensoleillement en France (jours/an)")
 
-    # Création de la carte des sols
-    fig_soil = px.scatter_geo(
+    # Création de la carte des sols avec scatter_mapbox
+    fig_soil = px.scatter_mapbox(
         df_sol,
-        lat="TH_LAT", 
-        lon="TH_LONG", 
-        color="Dominant_Chemical", 
+        lat="TH_LAT",
+        lon="TH_LONG",
+        color="Dominant_Chemical",
         hover_data=chem_columns,
         title="Carte des Composés Chimiques Dominants en Europe",
-        template="plotly_dark"
-    )
-    fig_soil.update_geos(
-        projection_type="mercator",
-        center={"lat": 50, "lon": 10},
-        showcoastlines=True, coastlinecolor="Black",
-        projection_scale=5
+        color_continuous_scale="viridis",
+        mapbox_style="carto-positron",
+        zoom=4,
+        opacity=0.8
     )
 
     # Affichage des cartes dans Streamlit
     st.plotly_chart(fig_sunlight, use_container_width=True)
     st.plotly_chart(fig_soil, use_container_width=True)
-
-
 
 
 def load_data():
