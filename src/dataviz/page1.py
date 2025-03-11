@@ -399,6 +399,27 @@ def load_and_display_soil_sunlight_map():
 
 def afficher_comparaison_modeles():
     """Affiche un tableau comparatif des modèles de régression dans Streamlit."""
+
+    # Création du DataFrame avec les résultats des 3 modèles
+    data = {
+        "Métriques": ["R-squared", "F-statistic", "Durbin-Watson", 
+                      "P-value Alcohol", "P-value Volatile Acidity", "P-value Sulphates", "P-value Citric Acid"],
+        "Modèle 1 (Alcool seul)": [0.355, 890.7, 1.693, "< 0.0001", None, None, None],
+        "Modèle 2 (Avec Citric Acid)": [0.454, 335.4, 1.697, "< 0.0001", "< 0.0001", "< 0.0001", "0.433"],
+        "Modèle 3 (Sans Citric Acid)": [0.454, 447.1, 1.698, "< 0.0001", "< 0.0001", "< 0.0001", None]
+    }
+
+    # Conversion en DataFrame
+    df_results = pd.DataFrame(data)
+
+    # Affichage dans Streamlit
+    st.title("📊 Comparaison des Modèles de Régression")
+    st.write("Ce tableau présente les principales métriques des trois modèles testés.")
+
+    # Affichage du tableau interactif
+    st.dataframe(df_results)
+
+    """Affiche un tableau comparatif des modèles de régression dans Streamlit."""
     
     # Création du DataFrame avec les résultats des 3 modèles
     data = {
