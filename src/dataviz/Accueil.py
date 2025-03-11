@@ -60,7 +60,7 @@ def accueil():
         }
         </style>
         """, unsafe_allow_html=True)
-    if tabs[1]:
+    with tabs[1]:
         intro.main()
 
 def main():
