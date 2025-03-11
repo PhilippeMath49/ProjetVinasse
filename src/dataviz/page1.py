@@ -669,7 +669,7 @@ def general():
         summary_model3()
         plot_residuals_model3()
         plot_qqplot_model3()
-        if st.button("Commencer l'Analyse"):
+        if st.button("Conclusion"):
             conclusion.main()
 
 
