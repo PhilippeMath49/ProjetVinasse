@@ -10,6 +10,7 @@ import requests
 import matplotlib.pyplot as plt
 import seaborn as sns
 import statsmodels.api as sm
+from scipy.stats import gaussian_kde
 
 def clean_wine_data(df):
     df.dropna(subset=["Entity", "Wine"], inplace=True)
