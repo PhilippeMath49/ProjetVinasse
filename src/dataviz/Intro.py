@@ -42,11 +42,11 @@ def main():
 
     # Dictionnaire des fichiers CSV (remplacez par vos chemins réels)
     csv_files = {
-        "WineMag": "winemag.csv",
-        "Wine Quality (Red)": "winequality-red.csv",
-        "Temps d'ensoleillement": "temps-densoleillement-par-an-par-departement-feuille-1.csv",
-        "LUCAS Soil 2018": "LUCAS-SOIL-2018.csv",
-        "Wine Production": "wine-production.csv"
+        "WineMag": "src/data/winemag.csv",
+        "Wine Quality (Red)": "src/data/winequality-red.csv",
+        "Temps d'ensoleillement": "src/data/temps-densoleillement-par-an-par-departement-feuille-1.csv",
+        "LUCAS Soil 2018": "src/data/LUCAS-SOIL-2018.csv",
+        "Wine Production": "src/data/wine-production.csv"
     }
 
     # Chargement des données et affichage
