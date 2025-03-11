@@ -406,10 +406,15 @@ def summary_model1():
     # Obtenir le résumé du modèle
     summary_model1 = model.summary()
 
-    # Afficher le résumé dans Streamlit
-    st.title("Résumé du modèle de régression")
-    st.text(summary_model1.as_text())  # Affiche le résumé du modèle sous forme de texte brut
-
+    # Afficher un cadre avec "Model 1" comme titre
+    st.markdown("""
+    <div style="border: 2px solid black; padding: 10px; border-radius: 10px; background-color: #f7f7f7;">
+        <h3 style="text-align: center; font-size: 20px; font-weight: bold;">Model 1</h3>
+        <pre style="white-space: pre-wrap; font-size: 14px; word-wrap: break-word;">
+    """ + summary_model1.as_text() + """
+        </pre>
+    </div>
+    """, unsafe_allow_html=True)
 
 
 
