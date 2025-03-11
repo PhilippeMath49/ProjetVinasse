@@ -1,66 +1,59 @@
 import streamlit as st
-import dataviz.Intro as intro
-import dataviz.page1 as page1
+import pandas as pd
 
-def accueil():
-    # Titre principal
-    st.title("Bienvenue dans l'application de Visualisation de Données")
+# Configuration de la page
+st.set_page_config(page_title="Exploration de CSV", layout="wide")
 
-    # Un sous-titre pour expliquer brièvement l'objectif de l'application
-    st.header("Analyse des Données des Vins Rouges")
-    st.write(
-        """
-        Cette application permet d'explorer et d'analyser les données relatives aux caractéristiques des vins rouges.
-        Vous pourrez visualiser différentes métriques et appliquer des modèles de régression pour prédire la qualité des vins.
-        """
-    )
+# Fonction pour charger les données avec mise en cache
+@st.cache_data
+def load_data(file):
+    try:
+        return pd.read_csv(file)
+    except Exception as e:
+        st.error(f"Erreur lors du chargement du fichier : {e}")
+        return None
 
-    # Une section d'informations supplémentaires
-    st.subheader("Objectif de l'Analyse")
-    st.write(
-        """
-        Nous allons explorer comment certaines caractéristiques, telles que l'alcool, l'acidité volatile et les sulfates, influencent la qualité des vins.
-        Des graphiques interactifs et des modèles de régression sont disponibles pour vous aider à mieux comprendre les relations entre ces variables.
-        """
-    )
+# Fonction pour afficher les informations du dataset
+def display_dataset_info(df):
+    st.write("### Aperçu des données :")
+    st.dataframe(df)
 
-    # Ajout d'un bouton pour accéder à la page suivante (exemple : page1)
-    st.subheader("Explorez les Pages")
-    st.write("Cliquez sur les boutons ci-dessous pour naviguer à travers l'application.")
-    
-    if st.button("Commencer l'Analyse"):
-        # Cette fonction pourrait rediriger vers une autre page (exemple: page1)
-        st.write("Introduction à l'Analyse des Données")
-        
-        page1.general()
-    if st.button("INTRO"):
-        # Cette fonction pourrait rediriger vers une autre page (exemple: page1)
-        st.write("Vous êtes maintenant prêt à commencer l'analyse. Bonne exploration !")
-        intro.main()
+    # Informations sur le dataset
+    with st.expander("Informations sur le dataset"):
+        st.write(f"**Nombre de lignes :** {df.shape[0]}")
+        st.write(f"**Nombre de colonnes :** {df.shape[1]}")
+        st.write(f"**Colonnes :** {df.columns.tolist()}")
+        st.write("**Résumé statistique :**")
+        st.write(df.describe())
 
-    # Ajouter un peu de style personnalisé
-    st.markdown("""
-    <style>
-    .stTitle {
-        font-size: 32px;
-        color: #1f77b4;
-        text-align: center;
-    }
-    .stHeader {
-        font-size: 24px;
-        color: #4caf50;
-    }
-    .stSubHeader {
-        font-size: 20px;
-        color: #ff9800;
-    }
-    .stMarkdown {
-        font-size: 16px;
-    }
-    </style>
-    """, unsafe_allow_html=True)
-
-
+# Fonction principale
 def main():
-    accueil()
+    st.sidebar.title("Sélectionnez un fichier CSV")
 
+    # Dictionnaire des fichiers CSV
+    csv_files = {
+        "WineMag": "src/data/winemag.csv",
+        "Wine Quality (Red)": "src/data/winequality-red.csv",
+        "Temps d'ensoleillement": "src/data/temps-densoleillement-par-an-par-departement-feuille-1.csv",
+        "LUCAS Soil 2018": "src/data/LUCAS-SOIL-2018.csv",
+        "Wine Production": "src/data/wine-production.csv"
+    }
+
+    # Sélection du dataset avec `key` pour préserver l'état
+    option = st.sidebar.radio(
+        "Choisissez un dataset :",
+        list(csv_files.keys()),
+        key="selected_option"
+    )
+
+    # Chargement et affichage des données
+    df = load_data(csv_files[option])
+    if df is not None:
+        st.title(f"Exploration du fichier : {option}")
+        display_dataset_info(df)
+    else:
+        st.warning("Impossible de charger les données. Vérifiez le fichier.")
+
+# Lancer l'application
+if __name__ == "__main__":
+    main()
