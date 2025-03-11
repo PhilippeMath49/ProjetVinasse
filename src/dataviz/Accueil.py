@@ -26,6 +26,7 @@ def accueil():
             """
             Nous allons explorer comment certaines caractéristiques, telles que l'alcool, l'acidité volatile et les sulfates, influencent la qualité des vins.
             Des graphiques interactifs et des modèles de régression sont disponibles pour vous aider à mieux comprendre les relations entre ces variables.
+            Le but etant de déterminer les facteurs les plus importants pour prédire la qualité des vins rouges.
             """
         )
 
