@@ -1,6 +1,9 @@
 import streamlit as st
 import pandas as pd
 
+# Configuration de la page (doit être appelée en premier dans le script)
+st.set_page_config(page_title="Exploration de CSV", layout="wide")
+
 # Fonction pour charger les données
 @st.cache  # Mise en cache des données pour éviter de les recharger à chaque clic
 def load_data(file):
@@ -25,9 +28,6 @@ def display_dataset_info(df):
 
 # Fonction principale qui affiche tout
 def main():
-    # Configuration de la page (doit être appelée en premier dans le script)
-    st.set_page_config(page_title="Exploration de CSV", layout="wide")
-    
     # Sidebar pour sélectionner le dataset
     st.sidebar.title("Sélectionnez un fichier CSV")
     option = st.sidebar.radio(
@@ -65,6 +65,3 @@ def main():
     # Ajouter un bouton "Rafraîchir" pour forcer le rechargement de la page
     st.sidebar.button("Rafraîchir", on_click=st.experimental_rerun)
 
-# Lancer l'application principale
-if __name__ == "__main__":
-    main()
