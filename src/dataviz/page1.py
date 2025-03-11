@@ -469,7 +469,7 @@ def summary_model3():
     </div>
     """, unsafe_allow_html=True)
 
-def plot_residuals_model1():
+def plot_residuals_model3():
     # Charger les données et ajuster le modèle
     df_quality = pd.read_csv("src/data/winequality-red.csv")
     X = df_quality[['alcohol', 'volatile acidity', 'sulphates']]
@@ -498,14 +498,40 @@ def plot_residuals_model1():
     # Affichage dans un cadre avec le titre "Model 1"
     st.markdown("""
     <div style="border: 2px solid grey; padding: 10px; border-radius: 10px; background-color: #1d1f20;">
-        <h3 style="text-align: center; font-size: 20px; font-weight: bold;">Model 1</h3>
+        <h3 style="text-align: center; font-size: 20px; font-weight: bold;">Model 3</h3>
     </div>
     """, unsafe_allow_html=True)
 
     # Afficher le graphique dans Streamlit
     st.pyplot(plt)
 
+def plot_qqplot_model3():
+    # Charger les données et ajuster le modèle
+    df_quality = pd.read_csv("src/data/winequality-red.csv")
+    X = df_quality[['alcohol', 'volatile acidity', 'sulphates']]
+    y = df_quality['quality']
+    
+    # Ajouter une constante pour l'intercept
+    X = sm.add_constant(X)
+    
+    # Ajuster le modèle de régression
+    model = sm.OLS(y, X).fit()
+    
+    # Récupérer les résidus
+    residuals = model.resid
+    
+    # Créer le Q-Q plot des résidus
+    plt.figure(figsize=(8, 6))
+    sm.qqplot(residuals, line='s')
+    
+    # Ajouter le titre
+    plt.title("Q-Q Plot des résidus")
+    
 
+    # Afficher le graphique dans Streamlit
+    st.pyplot(plt)
+
+# Appeler la fonction pour afficher le Q-Q plot
 
 def load_data():
     csv_path = "src/data/wine-production/wine-production.csv"
@@ -614,6 +640,7 @@ def general():
         summary_model1()
         summary_model2()
         summary_model3()
-        plot_residuals_model1()
+        plot_residuals_model3()
+        plot_qqplot_model3()
 
 
