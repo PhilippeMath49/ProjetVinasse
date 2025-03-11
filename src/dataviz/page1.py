@@ -389,7 +389,9 @@ def load_and_display_soil_sunlight_map():
     )
 
     # Affichage des cartes dans Streamlit
+    st.image("src/img/terre.gif",use_container_width =True, width=700)
     st.plotly_chart(fig_sunlight, use_container_width=True)
+    st.image("src/img/ezgif.gif",use_container_width =True, width=700)
     st.plotly_chart(fig_soil, use_container_width=True)
 
 
@@ -618,7 +620,7 @@ def matrice_correlation():
 def general():
     # Interface principale avec onglets
     st.title("Tableau de Bord sur le Vin 🍷")
-    tabs = st.tabs(["📊 Distribution des Notes et Analyse des Scores","📈 Variété et prix "," ⛅Type de sol et Soleil","🍷 caractéristique d'un bon vin"])
+    tabs = st.tabs(["📊 Distribution des Notes et Analyse des Scores","📈 Variété et prix "," ⛅Type de sol et Soleil","🍷 Caractéristique d'un bon vin"])
 
     with tabs[0]:
         distrib_note()
@@ -631,7 +633,7 @@ def general():
         
 
     with tabs[2]:
-        st.image("src/img/ezgif.gif",use_container_width =True, width=700)
+        
         # load_and_display_sunshine_map()
         load_and_display_soil_sunlight_map()
         alcool()
