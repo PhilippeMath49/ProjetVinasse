@@ -5,7 +5,7 @@ import pandas as pd
 st.set_page_config(page_title="Exploration de CSV", layout="wide")
 
 # Fonction pour charger les données
-@st.cache  # Ajout de st.cache pour améliorer la gestion des fichiers et éviter des rechargements inutiles
+@st.cache  # Mise en cache des données pour éviter de les recharger à chaque clic
 def load_data(file):
     try:
         return pd.read_csv(file)
@@ -51,6 +51,7 @@ def main():
     }
 
     # Chargement des données et affichage
+    df = None
     if option in csv_files:
         df = load_data(csv_files[option])
         if df is not None:
@@ -58,7 +59,7 @@ def main():
             display_dataset_info(df)
 
     # Option pour afficher plus d'infos sur les datasets
-    else:
+    if df is None:
         st.warning("Sélectionnez un fichier pour afficher les données")
 
 # Lancer l'application principale
