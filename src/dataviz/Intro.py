@@ -44,8 +44,7 @@ def main():
             "LUCAS Soil 2018",
             "Wine Production"
         ],
-        index=["WineMag", "Wine Quality (Red)", "Temps d'ensoleillement", "LUCAS Soil 2018", "Wine Production"].index(st.session_state.selected_option),
-        key='selected_option'  # Ajout du paramètre key pour maintenir l'état
+        index=["WineMag", "Wine Quality (Red)", "Temps d'ensoleillement", "LUCAS Soil 2018", "Wine Production"].index(st.session_state.selected_option)
     )
 
     # Sauvegarder la sélection dans session_state
