@@ -8,6 +8,7 @@ from scipy.stats import norm
 import plotly.graph_objects as go
 import requests
 import matplotlib.pyplot as plt
+import seaborn as sns
 
 def clean_wine_data(df):
     df.dropna(subset=["Entity", "Wine"], inplace=True)
@@ -459,27 +460,15 @@ def matrice_correlation():
     df_quality = pd.read_csv("src/data/winequality-red.csv")
     corr = df_quality.corr()
 
-# Créer un graphique de la matrice de corrélation avec Plotly
-    fig = go.Figure(data=go.Heatmap(
-        z=corr.values,
-        x=corr.columns,
-        y=corr.columns,
-        colorscale='coolwarm',
-        colorbar=dict(title="Corrélation"),
-    ))
+    # Création de la figure pour la carte thermique
+    plt.figure(figsize=(10, 5))
+    sns.heatmap(corr, annot=True, cmap='coolwarm', fmt='.2f', annot_kws={'size': 10})
 
-    # Mettre à jour le titre et la mise en forme
-    fig.update_layout(
-        title='Matrice de corrélation entre les variables',
-        xaxis_title='Variables',
-        yaxis_title='Variables',
-        template='plotly',
-        width=800,
-        height=600
-    )
+    # Titre de la carte thermique
+    plt.title('Matrice de corrélation entre les variables')
 
-    # Afficher la carte thermique dans Streamlit
-    st.plotly_chart(fig)
+    # Affichage de la carte thermique dans Streamlit
+    st.pyplot(plt)
 
 
 
