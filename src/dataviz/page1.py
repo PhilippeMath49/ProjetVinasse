@@ -524,5 +524,6 @@ def general():
 
     with tabs[3] :
         matrice_correlation()
+        summary_model1()
 
 
