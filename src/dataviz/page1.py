@@ -631,13 +631,14 @@ def general():
         
 
     with tabs[2]:
+        st.image("src/img/ezgif.gif",use_column_width=True)
         # load_and_display_sunshine_map()
         load_and_display_soil_sunlight_map()
         alcool()
 
     with tabs[3] :
         # add the gif
-        st.image("src/img/ezgif.gif",use_column_width=True)
+        
         matrice_correlation()
         summary_model1()
         summary_model2()
