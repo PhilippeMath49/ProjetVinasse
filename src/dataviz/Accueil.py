@@ -11,7 +11,6 @@ def accueil():
 
     # Lien vers la page "page1.general"
     if st.button("Accéder à la page1"):
-        st.query_params(page="page1")
         page1.general()
 
 
