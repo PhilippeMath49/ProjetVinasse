@@ -37,7 +37,7 @@ def main():
         "Temps d'ensoleillement": "src/data/temps-densoleillement-par-an-par-departement-feuille-1.csv",
         "LUCAS Soil 2018": "src/data/LUCAS-SOIL-2018.csv",
         "Wine Production": "src/data/wine-production/wine-production.csv",
-        "Wine Export": "src/data/wine-export/allwine_export_world_no_empty.csv"
+        "Wine Export": "src/data/wineexports/allwine_export_world_no_empty.csv"
     }
 
     # Sélection du dataset avec `key` pour préserver l'état
