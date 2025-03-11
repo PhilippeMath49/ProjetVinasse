@@ -648,7 +648,7 @@ def export_wine_chart():
 
     # Chargement des données
     file_path = "src/data/wineexports/allwine_export_world_no_empty.csv"
-    df_wine_export_world = load_data(file_path)
+    df_wine_export_world = pd.read_csv(file_path)
 
     # Vérifier si les données sont bien chargées
     if df_wine_export_world is not None:
