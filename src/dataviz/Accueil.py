@@ -1,5 +1,5 @@
 import streamlit as st
-import dataviz.page1 as page1
+import dataviz.Intro as intro
 
 def accueil():
     # Titre principal
@@ -30,7 +30,7 @@ def accueil():
     if st.button("Commencer l'Analyse"):
         # Cette fonction pourrait rediriger vers une autre page (exemple: page1)
         st.write("Vous êtes maintenant prêt à commencer l'analyse. Bonne exploration !")
-        page1.general()
+        intro.main()
 
     # Ajouter un peu de style personnalisé
     st.markdown("""
