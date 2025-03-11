@@ -1,11 +1,11 @@
 import streamlit as st
 import pandas as pd
 
-# Configuration de la page (doit être appelée en premier dans le script)
+# Configuration de la page
 st.set_page_config(page_title="Exploration de CSV", layout="wide")
 
-# Fonction pour charger les données
-@st.cache_data  # Mise en cache des données pour éviter de les recharger à chaque clic
+# Fonction pour charger les données avec mise en cache
+@st.cache_data
 def load_data(file):
     try:
         return pd.read_csv(file)
@@ -18,40 +18,19 @@ def display_dataset_info(df):
     st.write("### Aperçu des données :")
     st.dataframe(df)
 
-    # Affichage des informations sur le dataset
+    # Informations sur le dataset
     with st.expander("Informations sur le dataset"):
-        st.write("**Nombre de lignes :**", df.shape[0])
-        st.write("**Nombre de colonnes :**", df.shape[1])
-        st.write("**Colonnes :**", df.columns.tolist())
+        st.write(f"**Nombre de lignes :** {df.shape[0]}")
+        st.write(f"**Nombre de colonnes :** {df.shape[1]}")
+        st.write(f"**Colonnes :** {df.columns.tolist()}")
         st.write("**Résumé statistique :**")
         st.write(df.describe())
 
-# Fonction principale qui affiche tout
+# Fonction principale
 def main():
-    # Sidebar pour sélectionner le dataset
     st.sidebar.title("Sélectionnez un fichier CSV")
 
-    # Si une option est déjà sélectionnée dans le session_state, on l'utilise
-    if 'selected_option' not in st.session_state:
-        st.session_state.selected_option = "Wine Quality (Red)"  # Valeur par défaut
-
-    # Sélection du dataset dans la barre latérale
-    option = st.sidebar.radio(
-        "Choisissez un dataset :",
-        [
-            "WineMag",
-            "Wine Quality (Red)",
-            "Temps d'ensoleillement",
-            "LUCAS Soil 2018",
-            "Wine Production"
-        ],
-        index=["WineMag", "Wine Quality (Red)", "Temps d'ensoleillement", "LUCAS Soil 2018", "Wine Production"].index(st.session_state.selected_option)
-    )
-
-    # Sauvegarder la sélection dans session_state pour garder l'état
-    st.session_state.selected_option = option
-
-    # Dictionnaire des fichiers CSV avec le chemin relatif src/data/
+    # Dictionnaire des fichiers CSV
     csv_files = {
         "WineMag": "src/data/winemag.csv",
         "Wine Quality (Red)": "src/data/winequality-red.csv",
@@ -60,18 +39,21 @@ def main():
         "Wine Production": "src/data/wine-production.csv"
     }
 
-    # Chargement des données et affichage
-    df = None
-    if option in csv_files:
-        df = load_data(csv_files[option])
-        if df is not None:
-            st.title(f"Exploration du fichier : {option}")
-            display_dataset_info(df)
+    # Sélection du dataset avec `key` pour préserver l'état
+    option = st.sidebar.radio(
+        "Choisissez un dataset :",
+        list(csv_files.keys()),
+        key="selected_option"
+    )
 
-    # Option pour afficher plus d'infos sur les datasets
-    if df is None:
-        st.warning("Sélectionnez un fichier pour afficher les données")
+    # Chargement et affichage des données
+    df = load_data(csv_files[option])
+    if df is not None:
+        st.title(f"Exploration du fichier : {option}")
+        display_dataset_info(df)
+    else:
+        st.warning("Impossible de charger les données. Vérifiez le fichier.")
 
-# Lancer l'application principale
+# Lancer l'application
 if __name__ == "__main__":
     main()
