@@ -615,7 +615,32 @@ def matrice_correlation():
     # Affichage de la carte thermique dans Streamlit
     st.pyplot(plt)
 
+def sun():
+    st.subheader("📊 Visualisation Sunburst : Moyenne des Notes de Vin")
 
+    # Chargement des données
+    file_path = "data/winemagcontinent.csv"
+    winemagcontinent_df = load_data(file_path)
+
+    # Vérification si les données sont chargées correctement
+    if winemagcontinent_df is not None:
+        # Calcul de la moyenne des points par province
+        df_province = winemagcontinent_df.groupby(['continent', 'country', 'province'], as_index=False)['points'].mean()
+
+        # Création du diagramme Sunburst
+        fig = px.sunburst(
+            df_province,
+            path=['continent', 'country', 'province'],  # Hiérarchie : Continent → Pays → Province
+            values='points',  # Moyenne des notes comme valeurs
+            color='points',  # Coloration selon la moyenne des notes
+            color_continuous_scale='rdylgn',  # Palette de couleurs
+            title="Moyenne des notes de vin par Province, Pays et Continent"
+        )
+
+        # Affichage du graphique
+        st.plotly_chart(fig, use_container_width=True)
+    else:
+        st.warning("Les données n'ont pas pu être chargées. Vérifiez le fichier CSV.")
 
 def general():
     # Interface principale avec onglets
@@ -625,6 +650,7 @@ def general():
     with tabs[0]:
         distrib_note()
         distrib_meanscore()
+        sun()
 
     with tabs[1]:
         top_countries_chart()
