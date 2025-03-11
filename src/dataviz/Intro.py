@@ -30,6 +30,11 @@ def display_dataset_info(df):
 def main():
     # Sidebar pour sélectionner le dataset
     st.sidebar.title("Sélectionnez un fichier CSV")
+
+    # Si une option est déjà sélectionnée dans le session_state, on l'utilise
+    if 'selected_option' not in st.session_state:
+        st.session_state.selected_option = "Wine Quality (Red)"  # Valeur par défaut
+
     option = st.sidebar.radio(
         "Choisissez un dataset :",
         [
@@ -38,8 +43,12 @@ def main():
             "Temps d'ensoleillement",
             "LUCAS Soil 2018",
             "Wine Production"
-        ]
+        ],
+        index=["WineMag", "Wine Quality (Red)", "Temps d'ensoleillement", "LUCAS Soil 2018", "Wine Production"].index(st.session_state.selected_option)
     )
+
+    # Sauvegarder la sélection dans session_state
+    st.session_state.selected_option = option
 
     # Dictionnaire des fichiers CSV avec le chemin relatif src/data/
     csv_files = {
