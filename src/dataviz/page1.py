@@ -9,6 +9,7 @@ import plotly.graph_objects as go
 import requests
 import matplotlib.pyplot as plt
 import seaborn as sns
+import statsmodels.api as sm
 
 def clean_wine_data(df):
     df.dropna(subset=["Entity", "Wine"], inplace=True)
@@ -392,21 +393,22 @@ def load_and_display_soil_sunlight_map():
 
 
 def summary_model1():
+    df_quality = pd.read_csv("src/data/winequality-red.csv")
     X = df_quality['alcohol']
-y = df_quality['quality']
+    y = df_quality['quality']
 
-# Ajouter une constante pour l'intercept
-X = sm.add_constant(X)
+    # Ajouter une constante pour l'intercept
+    X = sm.add_constant(X)
 
-# Ajuster le modèle de régression
-model = sm.OLS(y, X).fit()
+    # Ajuster le modèle de régression
+    model = sm.OLS(y, X).fit()
 
-# Obtenir le résumé du modèle
-summary_model1 = model.summary()
+    # Obtenir le résumé du modèle
+    summary_model1 = model.summary()
 
-# Afficher le résumé dans Streamlit
-st.title("Résumé du modèle de régression")
-st.text(summary_model1.as_text())  # Affiche le résumé du modèle sous forme de texte brut
+    # Afficher le résumé dans Streamlit
+    st.title("Résumé du modèle de régression")
+    st.text(summary_model1.as_text())  # Affiche le résumé du modèle sous forme de texte brut
 
 
 
