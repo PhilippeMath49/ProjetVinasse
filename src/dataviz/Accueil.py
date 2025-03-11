@@ -32,7 +32,7 @@ def accueil():
         # Cette fonction pourrait rediriger vers une autre page (exemple: page1)
         st.write("Introduction à l'Analyse des Données")
         intro.main()
-    if st.button("Commencer l'Analyse"):
+    if st.button("INTRO"):
         # Cette fonction pourrait rediriger vers une autre page (exemple: page1)
         st.write("Vous êtes maintenant prêt à commencer l'analyse. Bonne exploration !")
         page1.general()
