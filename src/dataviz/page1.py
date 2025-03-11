@@ -389,9 +389,10 @@ def load_and_display_soil_sunlight_map():
     )
 
     # Affichage des cartes dans Streamlit
-    st.image("src/img/terre.gif",use_container_width =True, width=350)
-    st.plotly_chart(fig_sunlight, use_container_width=True)
     st.image("src/img/ezgif.gif",use_container_width =True, width=350)
+    st.plotly_chart(fig_sunlight, use_container_width=True)
+    st.image("src/img/terre.gif",use_container_width =True, width=350)
+
     st.plotly_chart(fig_soil, use_container_width=True)
 
 
