@@ -455,10 +455,38 @@ def alcool():
             fig = plot_trend(df['Tendance alcool'][i])
             st.pyplot(fig)
 
+def matrice_correlation():
+    df_quality = pd.read_csv("src/data/winequality-red.csv")
+    corr = df_quality.corr()
+
+# Créer un graphique de la matrice de corrélation avec Plotly
+    fig = go.Figure(data=go.Heatmap(
+        z=corr.values,
+        x=corr.columns,
+        y=corr.columns,
+        colorscale='coolwarm',
+        colorbar=dict(title="Corrélation"),
+    ))
+
+    # Mettre à jour le titre et la mise en forme
+    fig.update_layout(
+        title='Matrice de corrélation entre les variables',
+        xaxis_title='Variables',
+        yaxis_title='Variables',
+        template='plotly',
+        width=800,
+        height=600
+    )
+
+    # Afficher la carte thermique dans Streamlit
+    st.plotly_chart(fig)
+
+
+
 def general():
     # Interface principale avec onglets
     st.title("Tableau de Bord sur le Vin 🍷")
-    tabs = st.tabs(["📊 Distribution des Notes et Analyse des Scores","📈 Variété et prix ","Type de sol et Soleil"])
+    tabs = st.tabs(["📊 Distribution des Notes et Analyse des Scores","📈 Variété et prix "," ⛅Type de sol et Soleil",""])
 
     with tabs[0]:
         distrib_note()
@@ -474,4 +502,7 @@ def general():
         # load_and_display_sunshine_map()
         load_and_display_soil_sunlight_map()
         alcool()
+
+    with tabs[3] :
+
 
