@@ -648,7 +648,7 @@ def export_wine_chart():
 
     # Chargement des données
     file_path = "src/data/wineexports/allwine_export_world_no_empty.csv"
-    df_wine_export_world = pd.read_csv(file_path)
+    df_wine_export_world = load_data(file_path)
 
     # Vérifier si les données sont bien chargées
     if df_wine_export_world is not None:
@@ -659,8 +659,9 @@ def export_wine_chart():
         # Filtrer les données pour l'année sélectionnée
         df_filtered = df_wine_export_world[df_wine_export_world["refPeriodId"] == annee_cible]
 
-        # Regrouper les données par pays exportateur et sommer les quantités
+        # Regrouper et trier les données par quantité exportée (du plus grand au plus petit)
         df_grouped = df_filtered.groupby("reporterISO", as_index=False)["qtyUnitAbbr"].sum()
+        df_grouped = df_grouped.sort_values(by="qtyUnitAbbr", ascending=False)  # Tri décroissant
 
         # Création du graphique à barres
         fig = px.bar(
