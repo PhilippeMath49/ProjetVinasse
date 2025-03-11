@@ -28,7 +28,13 @@ def display_dataset_info(df):
 
 # Fonction principale
 def main():
-    st.sidebar.title("Sélectionnez un fichier CSV")
+    # Initialiser l'état d'affichage de la barre latérale
+    if "show_sidebar" not in st.session_state:
+        st.session_state.show_sidebar = False  # Par défaut, la barre latérale est masquée
+
+    # Bouton pour afficher/masquer la barre latérale
+    if st.button("🔧 Options Dataset"):
+        st.session_state.show_sidebar = not st.session_state.show_sidebar
 
     # Dictionnaire des fichiers CSV
     csv_files = {
@@ -39,12 +45,19 @@ def main():
         "Wine Production": "src/data/wine-production.csv"
     }
 
-    # Sélection du dataset avec `key` pour préserver l'état
-    option = st.sidebar.radio(
-        "Choisissez un dataset :",
-        list(csv_files.keys()),
-        key="selected_option"
-    )
+    # Afficher la barre latérale uniquement si `show_sidebar` est True
+    if st.session_state.show_sidebar:
+        with st.sidebar:
+            st.title("Sélectionnez un fichier CSV")
+            option = st.radio(
+                "Choisissez un dataset :",
+                list(csv_files.keys()),
+                key="selected_option"
+            )
+
+    else:
+        # Utiliser la dernière sélection connue si la barre est masquée
+        option = st.session_state.get("selected_option", "Wine Quality (Red)")
 
     # Chargement et affichage des données
     df = load_data(csv_files[option])
