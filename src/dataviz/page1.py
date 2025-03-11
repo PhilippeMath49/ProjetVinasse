@@ -716,8 +716,8 @@ def general():
     with tabs[3]:
         
         # load_and_display_sunshine_map()
-        load_and_display_soil_sunlight_map()
         alcool()
+        load_and_display_soil_sunlight_map()
 
     with tabs[2] :
         # add the gif
