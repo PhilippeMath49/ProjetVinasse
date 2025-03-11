@@ -481,7 +481,48 @@ def plot_qqplot_model3():
     # Afficher le graphique dans Streamlit
     st.pyplot(plt)
 
-# Appeler la fonction pour afficher le Q-Q plot
+def afficher_top_exportateurs_vin(annee_cible=2023):
+    """Affiche un graphique des 10 plus grands exportateurs de vin pour une année donnée."""
+    fichier_csv = "src/data/wineexports/allwine_export_world_no_empty.csv"
+
+    # Charger le fichier fusionné
+    df_wine_export_world = pd.read_csv(fichier_csv)
+
+    # Filtrer les données pour l'année choisie
+    df_filtered = df_wine_export_world[df_wine_export_world["refPeriodId"] == annee_cible]
+
+    # Regrouper les données par pays exportateur et sommer les quantités exportées
+    df_grouped = df_filtered.groupby("reporterISO", as_index=False)["qtyUnitAbbr"].sum()
+
+    # Sélectionner les 10 plus grands exportateurs
+    df_top10 = df_grouped.nlargest(10, "qtyUnitAbbr")
+
+    # Créer un histogramme (bar chart)
+    fig = px.bar(
+        df_top10,
+        x="reporterISO",
+        y="qtyUnitAbbr",
+        title=f"🍷 Top 10 des exportateurs de vin en {annee_cible}",
+        labels={"reporterISO": "Pays exportateur", "qtyUnitAbbr": "Quantité exportée"},
+        text_auto=True,  # Affiche les valeurs sur les barres
+        color="qtyUnitAbbr",  # Ajoute une couleur basée sur la quantité exportée
+        color_continuous_scale="Reds"  # Palette de couleurs
+    )
+
+    # Améliorer l'affichage
+    fig.update_layout(xaxis={'categoryorder': 'total descending'})  # Trier les barres par ordre décroissant
+
+    # Afficher le graphique dans Streamlit
+    st.plotly_chart(fig)
+
+# Vérification si le script est exécuté directement
+if __name__ == "__main__":
+    st.title("📊 Analyse des Exportations de Vin")
+    fichier_csv = "data/wineexports/allwine_export_world_no_empty.csv"
+    
+    # Sélection de l'année avec un slider Streamlit
+    annee_cible = st.slider("Sélectionnez une année", min_value=2000, max_value=2023, value=2023)
+    
 
 def load_data():
     csv_path = "src/data/wine-production/wine-production.csv"
@@ -666,6 +707,7 @@ def general():
         # load_and_display_sunshine_map()
         alcool()
         load_and_display_soil_sunlight_map()
+        afficher_top_exportateurs_vin()
 
 
     with tabs[2] :
