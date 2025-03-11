@@ -11,7 +11,7 @@ import dataviz.Accueil as accueil  # Pour la page d'accueil
 
 def main():
     # page1.general()
-    accueil
+    accueil.main()
     
 
 
