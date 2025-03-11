@@ -419,27 +419,6 @@ def afficher_comparaison_modeles():
     # Affichage du tableau interactif
     st.dataframe(df_results)
 
-    """Affiche un tableau comparatif des modèles de régression dans Streamlit."""
-    
-    # Création du DataFrame avec les résultats des 3 modèles
-    data = {
-        "Métriques": ["R-squared", "F-statistic", "Durbin-Watson", 
-                      "P-value Alcohol", "P-value Volatile Acidity", "P-value Sulphates"],
-        "Modèle 1 (Alcool seul)": [0.355, 890.7, 1.693, "< 0.0001", None, None],
-        "Modèle 2 (Alcool, Volatile Acidity, Sulphates, Citric Acid)": [0.454, 335.4, 1.697, "< 0.0001", "< 0.0001", "< 0.0001"],
-        "Modèle 3 (Alcool, Volatile Acidity, Sulphates)": [0.454, 447.1, 1.698, "< 0.0001", "< 0.0001", "< 0.0001"]
-    }
-
-    # Conversion en DataFrame
-    df_results = pd.DataFrame(data)
-
-    # Affichage dans Streamlit
-    st.title("📊 Comparaison des Modèles de Régression")
-    st.write("Ce tableau présente les principales métriques des trois modèles testés.")
-
-    # Affichage du tableau interactif
-    st.dataframe(df_results)
-
 def plot_residuals_model3():
     # Charger les données et ajuster le modèle
     df_quality = pd.read_csv("src/data/winequality-red.csv")
