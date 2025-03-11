@@ -416,9 +416,57 @@ def summary_model1():
     </div>
     """, unsafe_allow_html=True)
 
+def summary_model2():
+    df_quality = pd.read_csv("src/data/winequality-red.csv")
+    
+    # Sélection des variables
+    X = df_quality[['alcohol', 'volatile acidity', 'sulphates', 'citric acid']]
+    y = df_quality['quality']
 
+    # Ajouter une constante pour l'intercept
+    X = sm.add_constant(X)
 
+    # Ajuster le modèle de régression
+    model = sm.OLS(y, X).fit()
 
+    # Obtenir le résumé du modèle
+    model_summary = model.summary()
+
+    # Afficher un cadre avec "Model 2" comme titre
+    st.markdown("""
+    <div style="border: 2px solid black; padding: 10px; border-radius: 10px; background-color: #f7f7f7;">
+        <h3 style="text-align: center; font-size: 20px; font-weight: bold;">Model 2</h3>
+        <pre style="white-space: pre-wrap; font-size: 14px; word-wrap: break-word;">
+    """ + model_summary.as_text() + """
+        </pre>
+    </div>
+    """, unsafe_allow_html=True)
+
+def summary_model3():
+    df_quality = pd.read_csv("src/data/winequality-red.csv")
+    
+    # Sélection des variables
+    X = df_quality[['alcohol', 'volatile acidity', 'sulphates']]
+    y = df_quality['quality']
+
+    # Ajouter une constante pour l'intercept
+    X = sm.add_constant(X)
+
+    # Ajuster le modèle de régression
+    model = sm.OLS(y, X).fit()
+
+    # Obtenir le résumé du modèle
+    model_summary = model.summary()
+
+    # Afficher un cadre avec "Model 3" comme titre
+    st.markdown("""
+    <div style="border: 2px solid black; padding: 10px; border-radius: 10px; background-color: #f7f7f7;">
+        <h3 style="text-align: center; font-size: 20px; font-weight: bold;">Model 3*</h3>
+        <pre style="white-space: pre-wrap; font-size: 14px; word-wrap: break-word;">
+    """ + model_summary.as_text() + """
+        </pre>
+    </div>
+    """, unsafe_allow_html=True)
 
 
 
@@ -530,5 +578,7 @@ def general():
     with tabs[3] :
         matrice_correlation()
         summary_model1()
+        summary_model2()
+        summary_model3()
 
 
