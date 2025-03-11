@@ -639,7 +639,7 @@ def price_vs_score_plot():
 def general():
     # Interface principale avec onglets
     st.title("Tableau de Bord sur le Vin 🍷")
-    tabs = st.tabs(["📊 Distribution des Notes et Analyse des Scores","📈 Variété et prix ","🍷 Caractéristique d'un bon vin"," ⛅Type de sol et Soleil"])
+    tabs = st.tabs(["📊 Distribution des Notes et Analyse des Scores","📈 Variété et prix ","🍷 Caractéristique d'un bon vin"," ⛅Type de sol et Soleil","🎆 Conclusion"])
 
     with tabs[0]:
         distrib_note()
@@ -660,8 +660,7 @@ def general():
         alcool()
         load_and_display_soil_sunlight_map()
         tab = st.tabs(["🍷 Modèle de Régression"])
-        with tab[0]:
-            conclusion.main()
+
 
     with tabs[2] :
         # add the gif
@@ -672,6 +671,9 @@ def general():
         summary_model3()
         plot_residuals_model3()
         plot_qqplot_model3()
+        
+    with tabs[4]:
+        conclusion.main()
         
 
 
