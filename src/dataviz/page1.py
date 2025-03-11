@@ -479,3 +479,7 @@ def general():
         # load_and_display_sunshine_map()
         load_and_display_soil_sunlight_map()
         alcool()
+
+
+if __name__ == "__main__":
+    general()
