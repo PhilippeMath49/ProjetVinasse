@@ -659,7 +659,6 @@ def general():
         # load_and_display_sunshine_map()
         alcool()
         load_and_display_soil_sunlight_map()
-        tab = st.tabs(["🍷 Modèle de Régression"])
 
 
     with tabs[2] :

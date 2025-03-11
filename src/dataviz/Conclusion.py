@@ -21,10 +21,4 @@ def main():
     st.write("## Perspectives")
     st.write("Ainsi, les futures puissances viticoles pourraient être des régions qui remplissent ces conditions. Certaines zones aujourd’hui en développement pourraient devenir des références en matière de production de vin de qualité.")
 
-    # Interaction avec l'utilisateur
-    st.write("### Selon vous, quelles régions pourraient émerger dans le futur ?")
-    region = st.text_input("Entrez une région potentielle :")
-    if region:
-        st.write(f"🌍 {region} pourrait bien être une future terre d'excellence pour le vin !")
-
 
