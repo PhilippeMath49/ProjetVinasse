@@ -408,7 +408,7 @@ def summary_model1():
 
     # Afficher un cadre avec "Model 1" comme titre
     st.markdown("""
-    <div style="border: 2px solid black; padding: 10px; border-radius: 10px; background-color: #f7f7f7;">
+    <div style="border: 2px solid grey; padding: 10px; border-radius: 10px; background-color: #1d1f20;">
         <h3 style="text-align: center; font-size: 20px; font-weight: bold;">Model 1</h3>
         <pre style="white-space: pre-wrap; font-size: 14px; word-wrap: break-word;">
     """ + summary_model1.as_text() + """
