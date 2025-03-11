@@ -504,56 +504,6 @@ def plot_residuals_model1():
 
     # Afficher le graphique dans Streamlit
     st.pyplot(plt)
-    # Charger les données et ajuster le modèle
-    df_quality = pd.read_csv("src/data/winequality-red.csv")
-    X = df_quality[['alcohol', 'volatile acidity', 'sulphates']]
-    y = df_quality['quality']
-    
-    # Ajouter une constante pour l'intercept
-    X = sm.add_constant(X)
-    
-    # Ajuster le modèle de régression
-    model = sm.OLS(y, X).fit()
-    
-    # Récupérer les résidus
-    residuals = model.resid
-    
-    # Calcul de la courbe KDE avec scipy
-    kde = gaussian_kde(residuals)
-    x_vals = np.linspace(min(residuals), max(residuals), 1000)  # Plage des valeurs
-    kde_vals = kde(x_vals)  # Calcul des valeurs de densité pour chaque x
-    
-    # Créer le graphique avec Plotly
-    fig = go.Figure()
-
-    # Ajouter l'histogramme des résidus
-    fig.add_trace(go.Histogram(x=residuals, nbinsx=30, histnorm='probability', name='Histogramme', opacity=0.6, marker=dict(color='blue')))
-    
-    # Ajouter la courbe KDE
-    fig.add_trace(go.Scatter(x=x_vals, y=kde_vals, mode='lines', name='KDE', line=dict(color='red')))
-    
-    # Ajouter les labels et titre
-    fig.update_layout(
-        title='Distribution des résidus',
-        xaxis_title="Résidus",
-        yaxis_title="Fréquence",
-        bargap=0.2,
-        template='plotly',
-        width=800,
-        height=600
-    )
-
-    # Ajouter un cadre avec "Model 1" comme titre
-    st.markdown("""
-    <div style="border: 2px solid black; padding: 10px; border-radius: 10px; background-color: #f7f7f7;">
-        <h3 style="text-align: center; font-size: 20px; font-weight: bold;">Model 1</h3>
-    </div>
-    """, unsafe_allow_html=True)
-
-    # Afficher le graphique
-    st.plotly_chart(fig)
-
-
 
 
 
