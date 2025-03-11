@@ -71,6 +71,6 @@ def main():
     if df is None:
         st.warning("Sélectionnez un fichier pour afficher les données")
 
-    # Ajouter un bouton "Rafraîchir" pour forcer le rechargement de la page
-    st.sidebar.button("Rafraîchir", on_click=st.experimental_rerun)
-
+# Lancer l'application principale
+if __name__ == "__main__":
+    main()
