@@ -5,7 +5,7 @@ import dataviz.page1 as page1
 def accueil():
     
     
-    tabs = ["Accueil", "Introduction"] 
+    tabs = st.tabs(["Accueil", "Introduction"])
     with tabs[0]:
         
         # Titre principal
