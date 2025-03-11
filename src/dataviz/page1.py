@@ -483,14 +483,19 @@ def plot_residuals_model1():
     # Récupérer les résidus
     residuals = model.resid
     
+    # Calcul de la courbe KDE avec scipy
+    kde = gaussian_kde(residuals)
+    x_vals = np.linspace(min(residuals), max(residuals), 1000)  # Plage des valeurs
+    kde_vals = kde(x_vals)  # Calcul des valeurs de densité pour chaque x
+    
     # Créer le graphique avec Plotly
     fig = go.Figure()
 
-    # Ajouter l'histogramme et la courbe KDE
+    # Ajouter l'histogramme des résidus
     fig.add_trace(go.Histogram(x=residuals, nbinsx=30, histnorm='probability', name='Histogramme', opacity=0.6, marker=dict(color='blue')))
     
     # Ajouter la courbe KDE
-    fig.add_trace(go.Scatter(x=residuals, y=sns.kdeplot(residuals, fill=True).get_lines()[0].get_ydata(), mode='lines', name='KDE', line=dict(color='red')))
+    fig.add_trace(go.Scatter(x=x_vals, y=kde_vals, mode='lines', name='KDE', line=dict(color='red')))
     
     # Ajouter les labels et titre
     fig.update_layout(
