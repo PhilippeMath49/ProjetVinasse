@@ -1,5 +1,5 @@
 import streamlit as st
-
+import dataviz.page1 as page1
 
 def accueil():
     # Titre de la page d'accueil
@@ -12,7 +12,8 @@ def accueil():
     # Lien vers la page "page1.general"
     if st.button("Accéder à la page1"):
         st.experimental_set_query_params(page="page1")
-        st.experimental_rerun()
+        # run(page1.general)
+        page1.general()
 
 
 def main():
