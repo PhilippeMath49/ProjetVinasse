@@ -659,7 +659,8 @@ def general():
         # load_and_display_sunshine_map()
         alcool()
         load_and_display_soil_sunlight_map()
-        if st.button("Conclusion"):
+        tab = st.tabs(["🍷 Modèle de Régression"])
+        with tab[0]:
             conclusion.main()
 
     with tabs[2] :
