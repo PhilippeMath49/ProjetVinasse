@@ -618,7 +618,7 @@ def matrice_correlation():
 def general():
     # Interface principale avec onglets
     st.title("Tableau de Bord sur le Vin 🍷")
-    tabs = st.tabs(["📊 Distribution des Notes et Analyse des Scores","📈 Variété et prix "," ⛅Type de sol et Soleil",""])
+    tabs = st.tabs(["📊 Distribution des Notes et Analyse des Scores","📈 Variété et prix "," ⛅Type de sol et Soleil","🍷 caractéristique d'un bon vin"])
 
     with tabs[0]:
         distrib_note()
