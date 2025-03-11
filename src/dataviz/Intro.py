@@ -40,7 +40,7 @@ def main():
         ]
     )
 
-    # Dictionnaire des fichiers CSV (remplacez par vos chemins réels)
+    # Dictionnaire des fichiers CSV avec le chemin relatif src/data/
     csv_files = {
         "WineMag": "src/data/winemag.csv",
         "Wine Quality (Red)": "src/data/winequality-red.csv",
@@ -60,6 +60,3 @@ def main():
     else:
         st.warning("Sélectionnez un fichier pour afficher les données")
 
-# Lancer l'application principale
-if __name__ == "__main__":
-    main()
