@@ -620,7 +620,7 @@ def sun():
 
     # Chargement des données
     file_path = "src/data/winemagcontinent.csv"
-    winemagcontinent_df = load_data(file_path)
+    winemagcontinent_df = pd.read_csv(file_path)
 
     # Vérification si les données sont chargées correctement
     if winemagcontinent_df is not None:
