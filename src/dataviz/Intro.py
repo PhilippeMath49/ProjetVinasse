@@ -5,7 +5,7 @@ import pandas as pd
 st.set_page_config(page_title="Exploration de CSV", layout="wide")
 
 # Fonction pour charger les données
-@st.cache  # Mise en cache des données pour éviter de les recharger à chaque clic
+@st.cache_data  # Mise en cache des données pour éviter de les recharger à chaque clic
 def load_data(file):
     try:
         return pd.read_csv(file)
