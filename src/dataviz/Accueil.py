@@ -2,16 +2,58 @@ import streamlit as st
 import dataviz.page1 as page1
 
 def accueil():
-    # Titre de la page d'accueil
-    st.title("Page d'Accueil")
+    # Titre principal
+    st.title("Bienvenue dans l'application de Visualisation de Données")
 
-    # Lien pour rediriger vers la page "page1.general"
-    st.write("Bienvenue sur la page d'accueil de notre application Streamlit.")
-    st.write("Cliquez sur le lien ci-dessous pour accéder à la page 'page1' :")
+    # Un sous-titre pour expliquer brièvement l'objectif de l'application
+    st.header("Analyse des Données des Vins Rouges")
+    st.write(
+        """
+        Cette application permet d'explorer et d'analyser les données relatives aux caractéristiques des vins rouges.
+        Vous pourrez visualiser différentes métriques et appliquer des modèles de régression pour prédire la qualité des vins.
+        """
+    )
 
-    # Lien vers la page "page1.general"
-    if st.button("Accéder à la page1"):
-        page1.general()
+    # Une section d'informations supplémentaires
+    st.subheader("Objectif de l'Analyse")
+    st.write(
+        """
+        Nous allons explorer comment certaines caractéristiques, telles que l'alcool, l'acidité volatile et les sulfates, influencent la qualité des vins.
+        Des graphiques interactifs et des modèles de régression sont disponibles pour vous aider à mieux comprendre les relations entre ces variables.
+        """
+    )
+
+    # Ajout d'un bouton pour accéder à la page suivante (exemple : page1)
+    st.subheader("Explorez les Pages")
+    st.write("Cliquez sur les boutons ci-dessous pour naviguer à travers l'application.")
+    
+    if st.button("Commencer l'Analyse"):
+        # Cette fonction pourrait rediriger vers une autre page (exemple: page1)
+        st.write("Vous êtes maintenant prêt à commencer l'analyse. Bonne exploration !")
+        # Ajouter un lien vers la page d'analyse ou une autre section spécifique
+        st.markdown("[Accéder à l'Analyse des Résidus](#)")  # Remplacer le lien par l'URL réelle si nécessaire
+
+    # Ajouter un peu de style personnalisé
+    st.markdown("""
+    <style>
+    .stTitle {
+        font-size: 32px;
+        color: #1f77b4;
+        text-align: center;
+    }
+    .stHeader {
+        font-size: 24px;
+        color: #4caf50;
+    }
+    .stSubHeader {
+        font-size: 20px;
+        color: #ff9800;
+    }
+    .stMarkdown {
+        font-size: 16px;
+    }
+    </style>
+    """, unsafe_allow_html=True)
 
 
 def main():
