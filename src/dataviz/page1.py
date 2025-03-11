@@ -484,6 +484,40 @@ def plot_residuals_model1():
     # Récupérer les résidus
     residuals = model.resid
     
+    # Créer le graphique avec Matplotlib et Seaborn
+    plt.figure(figsize=(8, 6))
+
+    # Histogramme des résidus
+    sns.histplot(residuals, bins=30, kde=True, color='blue')
+    
+    # Ajouter les labels et titre
+    plt.xlabel("Résidus")
+    plt.ylabel("Fréquence")
+    plt.title("Distribution des résidus")
+    
+    # Affichage dans un cadre avec le titre "Model 1"
+    st.markdown("""
+    <div style="border: 2px solid black; padding: 10px; border-radius: 10px; background-color: #f7f7f7;">
+        <h3 style="text-align: center; font-size: 20px; font-weight: bold;">Model 1</h3>
+    </div>
+    """, unsafe_allow_html=True)
+
+    # Afficher le graphique dans Streamlit
+    st.pyplot(plt)
+    # Charger les données et ajuster le modèle
+    df_quality = pd.read_csv("src/data/winequality-red.csv")
+    X = df_quality[['alcohol', 'volatile acidity', 'sulphates']]
+    y = df_quality['quality']
+    
+    # Ajouter une constante pour l'intercept
+    X = sm.add_constant(X)
+    
+    # Ajuster le modèle de régression
+    model = sm.OLS(y, X).fit()
+    
+    # Récupérer les résidus
+    residuals = model.resid
+    
     # Calcul de la courbe KDE avec scipy
     kde = gaussian_kde(residuals)
     x_vals = np.linspace(min(residuals), max(residuals), 1000)  # Plage des valeurs
