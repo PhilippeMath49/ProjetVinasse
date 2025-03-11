@@ -434,7 +434,7 @@ def summary_model2():
 
     # Afficher un cadre avec "Model 2" comme titre
     st.markdown("""
-    <div style="border: 2px solid black; padding: 10px; border-radius: 10px; background-color: #f7f7f7;">
+    <div style="border: 2px solid grey; padding: 10px; border-radius: 10px; background-color: #1d1f20;">
         <h3 style="text-align: center; font-size: 20px; font-weight: bold;">Model 2</h3>
         <pre style="white-space: pre-wrap; font-size: 14px; word-wrap: break-word;">
     """ + model_summary.as_text() + """
@@ -460,7 +460,7 @@ def summary_model3():
 
     # Afficher un cadre avec "Model 3" comme titre
     st.markdown("""
-    <div style="border: 2px solid black; padding: 10px; border-radius: 10px; background-color: #f7f7f7;">
+    <div style="border: 2px solid grey; padding: 10px; border-radius: 10px; background-color: #1d1f20;">
         <h3 style="text-align: center; font-size: 20px; font-weight: bold;">Model 3*</h3>
         <pre style="white-space: pre-wrap; font-size: 14px; word-wrap: break-word;">
     """ + model_summary.as_text() + """
