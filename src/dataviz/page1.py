@@ -643,40 +643,6 @@ def sun():
         st.warning("Les données n'ont pas pu être chargées. Vérifiez le fichier CSV.")
 
 
-def export_wine_chart():
-    st.subheader("📊 Exportations de vin par pays")
-
-    # Chargement des données
-    file_path = "src/data/wineexports/allwine_export_world_no_empty.csv"
-    df_wine_export_world = pd.read_csv(file_path)
-
-    # Vérifier si les données sont bien chargées
-    if df_wine_export_world is not None:
-        # Sélection de l'année avec un menu déroulant
-        annees_disponibles = sorted(df_wine_export_world["refPeriodId"].unique(), reverse=True)
-        annee_cible = st.selectbox("Sélectionnez une année :", annees_disponibles)
-
-        # Filtrer les données pour l'année sélectionnée
-        df_filtered = df_wine_export_world[df_wine_export_world["refPeriodId"] == annee_cible]
-
-        # Regrouper et trier les données par quantité exportée (du plus grand au plus petit)
-        df_grouped = df_filtered.groupby("reporterISO", as_index=False)["qtyUnitAbbr"].sum()
-        df_grouped = df_grouped.sort_values(by="qtyUnitAbbr", ascending=False)  # Tri décroissant
-
-        # Création du graphique à barres
-        fig = px.bar(
-            df_grouped,
-            x="reporterISO",
-            y="qtyUnitAbbr",
-            title=f"Exportations de vin par pays en {annee_cible}",
-            labels={"reporterISO": "Pays exportateur", "qtyUnitAbbr": "Quantité exportée"},
-            text_auto=True
-        )
-
-        # Affichage du graphique
-        st.plotly_chart(fig, use_container_width=True)
-    else:
-        st.warning("Les données n'ont pas pu être chargées. Vérifiez le fichier CSV.")
 
 
 def general():
@@ -688,7 +654,6 @@ def general():
         distrib_note()
         distrib_meanscore()
         sun()
-        export_wine_chart()
 
     with tabs[1]:
         top_countries_chart()
