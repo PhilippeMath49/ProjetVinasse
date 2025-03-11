@@ -636,6 +636,8 @@ def general():
         alcool()
 
     with tabs[3] :
+        # add the gif
+        st.image("src/img/ezgif.gif",use_column_width=True)
         matrice_correlation()
         summary_model1()
         summary_model2()
