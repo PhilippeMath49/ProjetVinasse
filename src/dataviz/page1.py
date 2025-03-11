@@ -390,6 +390,34 @@ def load_and_display_soil_sunlight_map():
     st.plotly_chart(fig_sunlight, use_container_width=True)
     st.plotly_chart(fig_soil, use_container_width=True)
 
+
+def summary_model1():
+    X = df_quality['alcohol']
+y = df_quality['quality']
+
+# Ajouter une constante pour l'intercept
+X = sm.add_constant(X)
+
+# Ajuster le modèle de régression
+model = sm.OLS(y, X).fit()
+
+# Obtenir le résumé du modèle
+summary_model1 = model.summary()
+
+# Afficher le résumé dans Streamlit
+st.title("Résumé du modèle de régression")
+st.text(summary_model1.as_text())  # Affiche le résumé du modèle sous forme de texte brut
+
+
+
+
+
+
+
+
+
+
+
 def load_data():
     csv_path = "src/data/wine-production/wine-production.csv"
     shapefile_path = "src/map/ne_110m_admin_0_countries/ne_110m_admin_0_countries.shp"
