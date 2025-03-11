@@ -396,86 +396,19 @@ def load_and_display_soil_sunlight_map():
 
 
 def summary_model1():
-    df_quality = pd.read_csv("src/data/winequality-red.csv")
-    X = df_quality['alcohol']
-    y = df_quality['quality']
 
-    # Ajouter une constante pour l'intercept
-    X = sm.add_constant(X)
-
-    # Ajuster le modèle de régression
-    model = sm.OLS(y, X).fit()
-
-    # Obtenir le résumé du modèle
-    summary_model1 = model.summary()
-    
     st.image("src/img/modele1.png",use_container_width =True)
 
-    # Afficher un cadre avec "Model 1" comme titre
-    st.markdown("""
-    <div style="border: 2px solid grey; padding: 10px; border-radius: 10px; background-color: #1d1f20;">
-        <h3 style="text-align: center; font-size: 20px; font-weight: bold;">Model 1</h3>
-        <pre style="white-space: pre-wrap; font-size: 14px; word-wrap: break-word;">
-    """ + summary_model1.as_text() + """
-        </pre>
-    </div>
-    """, unsafe_allow_html=True)
 
 def summary_model2():
-    df_quality = pd.read_csv("src/data/winequality-red.csv")
-    
-    # Sélection des variables
-    X = df_quality[['alcohol', 'volatile acidity', 'sulphates', 'citric acid']]
-    y = df_quality['quality']
 
-    # Ajouter une constante pour l'intercept
-    X = sm.add_constant(X)
-
-    # Ajuster le modèle de régression
-    model = sm.OLS(y, X).fit()
-
-    # Obtenir le résumé du modèle
-    model_summary = model.summary()
-    
     st.image("src/img/modele2.png",use_container_width =True)
 
-    # Afficher un cadre avec "Model 2" comme titre
-    st.markdown("""
-    <div style="border: 2px solid grey; padding: 10px; border-radius: 10px; background-color: #1d1f20;">
-        <h3 style="text-align: center; font-size: 20px; font-weight: bold;">Model 2</h3>
-        <pre style="white-space: pre-wrap; font-size: 14px; word-wrap: break-word;">
-    """ + model_summary.as_text() + """
-        </pre>
-    </div>
-    """, unsafe_allow_html=True)
 
 def summary_model3():
-    df_quality = pd.read_csv("src/data/winequality-red.csv")
-    
-    # Sélection des variables
-    X = df_quality[['alcohol', 'volatile acidity', 'sulphates']]
-    y = df_quality['quality']
 
-    # Ajouter une constante pour l'intercept
-    X = sm.add_constant(X)
-
-    # Ajuster le modèle de régression
-    model = sm.OLS(y, X).fit()
-
-    # Obtenir le résumé du modèle
-    model_summary = model.summary()
-    
     st.image("src/img/modele3.png",use_container_width =True)
 
-    # Afficher un cadre avec "Model 3" comme titre
-    st.markdown("""
-    <div style="border: 2px solid grey; padding: 10px; border-radius: 10px; background-color: #1d1f20;">
-        <h3 style="text-align: center; font-size: 20px; font-weight: bold;">Model 3</h3>
-        <pre style="white-space: pre-wrap; font-size: 14px; word-wrap: break-word;">
-    """ + model_summary.as_text() + """
-        </pre>
-    </div>
-    """, unsafe_allow_html=True)
 
 def plot_residuals_model3():
     # Charger les données et ajuster le modèle
