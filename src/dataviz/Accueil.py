@@ -10,7 +10,9 @@ def accueil():
     st.write("Cliquez sur le lien ci-dessous pour accéder à la page 'page1' :")
 
     # Lien vers la page "page1.general"
-    st.markdown("[Accéder à la page1](./page1)")
+    if st.button("Accéder à la page1"):
+        st.experimental_set_query_params(page="page1")
+        st.experimental_rerun()
 
 
 def main():
