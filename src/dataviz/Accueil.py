@@ -1,5 +1,4 @@
 import streamlit as st
-import page1 as page1
 
 
 def accueil():
