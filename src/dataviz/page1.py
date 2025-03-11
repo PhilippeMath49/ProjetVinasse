@@ -632,13 +632,13 @@ def general():
         price_comparison_chart()
         
 
-    with tabs[2]:
+    with tabs[3]:
         
         # load_and_display_sunshine_map()
         load_and_display_soil_sunlight_map()
         alcool()
 
-    with tabs[3] :
+    with tabs[2] :
         # add the gif
         
         matrice_correlation()
