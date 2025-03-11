@@ -631,7 +631,7 @@ def general():
         
 
     with tabs[2]:
-        st.image("src/img/ezgif.gif",use_column_width=True)
+        st.image("src/img/ezgif.gif",use_container_width =True, width=700)
         # load_and_display_sunshine_map()
         load_and_display_soil_sunlight_map()
         alcool()
