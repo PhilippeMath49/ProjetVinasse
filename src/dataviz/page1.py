@@ -408,6 +408,8 @@ def summary_model1():
 
     # Obtenir le résumé du modèle
     summary_model1 = model.summary()
+    
+    st.image("src/img/modele1.png",use_container_width =True)
 
     # Afficher un cadre avec "Model 1" comme titre
     st.markdown("""
@@ -434,6 +436,8 @@ def summary_model2():
 
     # Obtenir le résumé du modèle
     model_summary = model.summary()
+    
+    st.image("src/img/modele2.png",use_container_width =True)
 
     # Afficher un cadre avec "Model 2" comme titre
     st.markdown("""
@@ -460,6 +464,8 @@ def summary_model3():
 
     # Obtenir le résumé du modèle
     model_summary = model.summary()
+    
+    st.image("src/img/modele3.png",use_container_width =True)
 
     # Afficher un cadre avec "Model 3" comme titre
     st.markdown("""
