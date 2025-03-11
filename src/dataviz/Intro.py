@@ -35,6 +35,7 @@ def main():
     if 'selected_option' not in st.session_state:
         st.session_state.selected_option = "Wine Quality (Red)"  # Valeur par défaut
 
+    # Sélection du dataset dans la barre latérale
     option = st.sidebar.radio(
         "Choisissez un dataset :",
         [
@@ -47,7 +48,7 @@ def main():
         index=["WineMag", "Wine Quality (Red)", "Temps d'ensoleillement", "LUCAS Soil 2018", "Wine Production"].index(st.session_state.selected_option)
     )
 
-    # Sauvegarder la sélection dans session_state
+    # Sauvegarder la sélection dans session_state pour garder l'état
     st.session_state.selected_option = option
 
     # Dictionnaire des fichiers CSV avec le chemin relatif src/data/
