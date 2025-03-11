@@ -1,9 +1,9 @@
+
 import streamlit as st
 
-def main():
-    # Configuration de la page
-    st.set_page_config(page_title="Conclusion - Qualité du Vin", layout="centered")
+st.set_page_config(page_title="Conclusion - Qualité du Vin", layout="centered")
 
+def main():
     # Titre principal
     st.title("Conclusion sur la Qualité du Vin")
 
@@ -26,3 +26,5 @@ def main():
     region = st.text_input("Entrez une région potentielle :")
     if region:
         st.write(f"🌍 {region} pourrait bien être une future terre d'excellence pour le vin !")
+
+
