@@ -1,5 +1,5 @@
 import streamlit as st
-
+import page1 as page1
 
 
 def accueil():
@@ -11,7 +11,7 @@ def accueil():
     st.write("Cliquez sur le lien ci-dessous pour accéder à la page 'page1' :")
 
     # Lien vers la page "page1.general"
-    st.markdown("[Accéder à la page1](./page1)")
+    st.markdown("[Accéder à la page1](page1)")
 
 
 def main():
