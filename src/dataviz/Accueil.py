@@ -30,8 +30,7 @@ def accueil():
     if st.button("Commencer l'Analyse"):
         # Cette fonction pourrait rediriger vers une autre page (exemple: page1)
         st.write("Vous êtes maintenant prêt à commencer l'analyse. Bonne exploration !")
-        # Ajouter un lien vers la page d'analyse ou une autre section spécifique
-        st.markdown("[Accéder à l'Analyse des Résidus](#)")  # Remplacer le lien par l'URL réelle si nécessaire
+        page1.general()
 
     # Ajouter un peu de style personnalisé
     st.markdown("""
