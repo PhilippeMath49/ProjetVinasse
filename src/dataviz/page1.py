@@ -642,7 +642,57 @@ def sun():
     else:
         st.warning("Les données n'ont pas pu être chargées. Vérifiez le fichier CSV.")
 
+def price_vs_score_plot():
+    st.subheader("📊 Relation entre le prix et le score du vin")
 
+    # Chargement des données
+    file_path = "src/data/wine_data.csv"  # 🔧 Remplace par ton fichier réel
+    df = pd.read_csv(file_path)
+
+    if df is not None:
+        # Vérifier que les colonnes nécessaires existent
+        if "price" not in df.columns or "points" not in df.columns:
+            st.error("Le fichier ne contient pas les colonnes 'price' et 'points'.")
+            return
+
+        # Supprimer les valeurs manquantes
+        df = df.dropna(subset=["price", "points"])
+
+        # Créer des tranches de prix
+        price_bins = pd.cut(df["price"], bins=np.linspace(0, df["price"].quantile(0.95), 10), include_lowest=True)
+        price_bin_centers = price_bins.cat.categories.mid  # Centres des tranches
+
+        # Calculer les moyennes des scores par tranche de prix
+        mean_scores = df.groupby(price_bins)["points"].mean()
+
+        # Création du graphique
+        fig, ax = plt.subplots(figsize=(10, 6))
+
+        # Tracer uniquement les moyennes des scores par tranche de prix
+        ax.plot(price_bin_centers, mean_scores, marker="o", color="orange", label="Moyenne des scores")
+
+        # Ajouter une régression linéaire (courbe de tendance globale)
+        sns.regplot(x=df["price"], y=df["points"], scatter=False, color="red", line_kws={"linewidth": 2, "alpha": 0.8}, label="Tendance globale", ax=ax)
+
+        # Configurer les limites des axes
+        ax.set_xlim(0, df["price"].quantile(0.95))  # Exclure les valeurs extrêmes
+        ax.set_ylim(80, 100)
+
+        # Ajouter un titre et des labels d'axes
+        ax.set_title("Relation entre le prix et le score du vin", fontsize=14, fontweight="bold")
+        ax.set_xlabel("Prix ($)")
+        ax.set_ylabel("Points")
+
+        # Ajouter une légende
+        ax.legend()
+
+        # Améliorer la mise en page
+        plt.tight_layout()
+
+        # Affichage du graphique dans Streamlit
+        st.pyplot(fig)
+    else:
+        st.warning("Les données n'ont pas pu être chargées. Vérifiez le fichier.")
 
 
 def general():
@@ -654,6 +704,7 @@ def general():
         distrib_note()
         distrib_meanscore()
         sun()
+        price_vs_score_plot()
 
     with tabs[1]:
         top_countries_chart()
