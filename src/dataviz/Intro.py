@@ -1,15 +1,32 @@
 import streamlit as st
 import pandas as pd
 
+# Configuration de la page
+st.set_page_config(page_title="Exploration de CSV", layout="wide")
 
-def main():
-    # Configuration de la page
-    st.set_page_config(page_title="Exploration de CSV", layout="wide")
-
-    # Fonction pour charger les données
-    def load_data(file):
+# Fonction pour charger les données
+def load_data(file):
+    try:
         return pd.read_csv(file)
+    except Exception as e:
+        st.error(f"Erreur lors du chargement du fichier : {e}")
+        return None
 
+# Fonction pour afficher les informations du dataset
+def display_dataset_info(df):
+    st.write("### Aperçu des données :")
+    st.dataframe(df)
+
+    # Affichage des informations sur le dataset
+    with st.expander("Informations sur le dataset"):
+        st.write("**Nombre de lignes :**", df.shape[0])
+        st.write("**Nombre de colonnes :**", df.shape[1])
+        st.write("**Colonnes :**", df.columns.tolist())
+        st.write("**Résumé statistique :**")
+        st.write(df.describe())
+
+# Fonction principale qui affiche tout
+def main():
     # Sidebar pour sélectionner le dataset
     st.sidebar.title("Sélectionnez un fichier CSV")
     option = st.sidebar.radio(
@@ -32,26 +49,14 @@ def main():
         "Wine Production": "wine-production.csv"
     }
 
-    # Chargement des données
+    # Chargement des données et affichage
     if option in csv_files:
-        try:
-            df = load_data(csv_files[option])
+        df = load_data(csv_files[option])
+        if df is not None:
             st.title(f"Exploration du fichier : {option}")
-            st.write("### Aperçu des données :")
-            st.dataframe(df)
-        except Exception as e:
-            st.error(f"Erreur lors du chargement du fichier : {e}")
-    else:
-        st.warning("Sélectionnez un fichier pour afficher les données")
+            display_dataset_info(df)
 
     # Option pour afficher plus d'infos sur les datasets
-    if 'df' in locals():
-        with st.expander("Informations sur le dataset"):
-            st.write("**Nombre de lignes :**", df.shape[0])
-            st.write("**Nombre de colonnes :**", df.shape[1])
-            st.write("**Colonnes :**", df.columns.tolist())
-            st.write("**Résumé statistique :**")
-            st.write(df.describe())
-
-
+    else:
+        st.warning("Sélectionnez un fichier pour afficher les données")
 
