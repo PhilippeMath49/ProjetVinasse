@@ -646,7 +646,7 @@ def price_vs_score_plot():
     st.subheader("📊 Relation entre le prix et le score du vin")
 
     # Chargement des données
-    file_path = "src/data/wine_data.csv"  # 🔧 Remplace par ton fichier réel
+    file_path = "src/data/winemag.csv"  # 🔧 Remplace par ton fichier réel
     df = pd.read_csv(file_path)
 
     if df is not None:
@@ -704,12 +704,13 @@ def general():
         distrib_note()
         distrib_meanscore()
         sun()
-        price_vs_score_plot()
+        
 
     with tabs[1]:
         top_countries_chart()
         top_varieties_chart()
         price_comparison_chart()
+        price_vs_score_plot()
         
 
     with tabs[3]:
