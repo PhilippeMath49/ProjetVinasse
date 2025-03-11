@@ -659,6 +659,8 @@ def general():
         # load_and_display_sunshine_map()
         alcool()
         load_and_display_soil_sunlight_map()
+        if st.button("Conclusion"):
+            conclusion.main()
 
     with tabs[2] :
         # add the gif
@@ -669,7 +671,6 @@ def general():
         summary_model3()
         plot_residuals_model3()
         plot_qqplot_model3()
-        if st.button("Conclusion"):
-            conclusion.main()
+        
 
 
