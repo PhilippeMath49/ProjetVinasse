@@ -504,5 +504,6 @@ def general():
         alcool()
 
     with tabs[3] :
+        matrice_correlation()
 
 
