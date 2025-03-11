@@ -1,7 +1,7 @@
 import streamlit as st
 import pandas as pd
 
-# Configuration de la page
+# Configuration de la page (doit être appelée en premier dans le script)
 st.set_page_config(page_title="Exploration de CSV", layout="wide")
 
 # Fonction pour charger les données
@@ -60,3 +60,6 @@ def main():
     else:
         st.warning("Sélectionnez un fichier pour afficher les données")
 
+# Lancer l'application principale
+if __name__ == "__main__":
+    main()
