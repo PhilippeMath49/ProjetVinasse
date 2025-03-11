@@ -619,7 +619,7 @@ def sun():
     st.subheader("📊 Visualisation Sunburst : Moyenne des Notes de Vin")
 
     # Chargement des données
-    file_path = "data/winemagcontinent.csv"
+    file_path = "src/data/winemagcontinent.csv"
     winemagcontinent_df = load_data(file_path)
 
     # Vérification si les données sont chargées correctement
