@@ -497,7 +497,7 @@ def plot_residuals_model1():
     
     # Affichage dans un cadre avec le titre "Model 1"
     st.markdown("""
-    <div style="border: 2px solid grey; padding: 10px; border-radius: 10px; background-color: #f7f7f7;">
+    <div style="border: 2px solid grey; padding: 10px; border-radius: 10px; background-color: #1d1f20;">
         <h3 style="text-align: center; font-size: 20px; font-weight: bold;">Model 1</h3>
     </div>
     """, unsafe_allow_html=True)
